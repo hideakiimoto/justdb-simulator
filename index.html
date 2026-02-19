@@ -1,0 +1,1851 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JUST.DB - 見積シミュレーター</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* ==========================================
+       CSS Custom Properties (Design Tokens)
+       ========================================== */
+    :root {
+      --navy: #1a3a5c;
+      --navy-light: #2a5a8c;
+      --navy-dark: #0f2440;
+      --orange: #f07900;
+      --orange-light: #fff3e6;
+      --orange-hover: #d96b00;
+      --bg: #f5f6fa;
+      --card-bg: #ffffff;
+      --text-primary: #2c3e50;
+      --text-secondary: #6c7a89;
+      --text-muted: #95a5a6;
+      --success: #27ae60;
+      --border: #e1e8ef;
+      --shadow: 0 2px 12px rgba(26, 58, 92, 0.08);
+      --shadow-lg: 0 8px 32px rgba(26, 58, 92, 0.12);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --font: 'Noto Sans JP', sans-serif;
+      --transition: all 0.2s ease;
+    }
+
+    /* ==========================================
+       Reset & Base
+       ========================================== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ==========================================
+       Header
+       ========================================== */
+    .app-header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      color: #fff;
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .header-logo span {
+      color: var(--orange);
+    }
+
+    .header-subtitle {
+      font-size: 0.875rem;
+      opacity: 0.85;
+      font-weight: 400;
+    }
+
+    .header-date {
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    /* ==========================================
+       Layout
+       ========================================== */
+    .app-layout {
+      display: grid;
+      grid-template-columns: 1fr 440px;
+      gap: 28px;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 28px 32px 120px;
+    }
+
+    .configurator {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .results-panel {
+      position: sticky;
+      top: 88px;
+      height: fit-content;
+      max-height: calc(100vh - 108px);
+      overflow-y: auto;
+    }
+
+    /* ==========================================
+       Config Sections
+       ========================================== */
+    .config-section {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .section-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: var(--orange-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .section-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .section-hint {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      background: var(--bg);
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    /* ==========================================
+       License Stepper
+       ========================================== */
+    .license-stepper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .stepper-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--navy);
+      background: #fff;
+      color: var(--navy);
+      font-size: 1.3rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .stepper-btn:hover:not(:disabled) {
+      background: var(--navy);
+      color: #fff;
+    }
+
+    .stepper-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .stepper-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--navy);
+      min-width: 100px;
+      text-align: center;
+      cursor: text;
+      border: 2px solid transparent;
+      border-radius: var(--radius-sm);
+      padding: 4px 8px;
+      transition: var(--transition);
+    }
+
+    .stepper-value:focus {
+      outline: none;
+      border-color: var(--orange);
+      background: var(--orange-light);
+    }
+
+    .stepper-unit {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .license-slider-wrap {
+      padding: 0 4px;
+      margin-bottom: 12px;
+    }
+
+    .license-slider {
+      width: 100%;
+      height: 6px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: var(--border);
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .license-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--orange);
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(240, 121, 0, 0.3);
+      transition: transform 0.15s ease;
+    }
+
+    .license-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+
+    .license-slider::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--orange);
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 6px rgba(240, 121, 0, 0.3);
+    }
+
+    .license-cost {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .license-cost strong {
+      color: var(--orange);
+      font-size: 1.1rem;
+    }
+
+    /* ==========================================
+       Package Cards
+       ========================================== */
+    .package-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .package-card {
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .package-card:hover {
+      border-color: var(--navy-light);
+      box-shadow: var(--shadow);
+    }
+
+    .package-card.selected {
+      border-color: var(--orange);
+      background: var(--orange-light);
+      box-shadow: 0 0 0 3px rgba(240, 121, 0, 0.15);
+    }
+
+    .package-card-check {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      transition: var(--transition);
+    }
+
+    .package-card.selected .package-card-check {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+    }
+
+    .package-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .package-price {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--orange);
+      margin-bottom: 12px;
+    }
+
+    .package-price .price-unit {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .package-price-tbd {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--bg);
+      padding: 4px 10px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .package-features {
+      list-style: none;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .package-features li {
+      padding: 3px 0;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .package-features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .package-note {
+      margin-top: 12px;
+      padding: 8px 12px;
+      background: #fef3cd;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      color: #856404;
+      display: none;
+    }
+
+    .package-card.selected .package-note {
+      display: block;
+    }
+
+    /* ==========================================
+       Feature Checkboxes
+       ========================================== */
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .feature-item:hover {
+      border-color: var(--navy-light);
+      background: #f8f9fd;
+    }
+
+    .feature-item.checked {
+      border-color: var(--orange);
+      background: var(--orange-light);
+    }
+
+    .feature-item input[type="checkbox"] {
+      display: none;
+    }
+
+    .feature-checkbox-visual {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: var(--transition);
+      font-size: 0.7rem;
+      color: transparent;
+    }
+
+    .feature-item.checked .feature-checkbox-visual {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+    }
+
+    .feature-label {
+      flex: 1;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .feature-badge {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--bg);
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .selected-count {
+      text-align: right;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .selected-count strong {
+      color: var(--orange);
+    }
+
+    /* ==========================================
+       Options
+       ========================================== */
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* ==========================================
+       Contract Period Segments
+       ========================================== */
+    .period-segments {
+      display: flex;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 2px solid var(--navy);
+    }
+
+    .period-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      background: #fff;
+      color: var(--navy);
+      font-family: var(--font);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .period-btn:not(:last-child) {
+      border-right: 2px solid var(--navy);
+    }
+
+    .period-btn:hover:not(.active) {
+      background: #eef2f7;
+    }
+
+    .period-btn.active {
+      background: var(--navy);
+      color: #fff;
+    }
+
+    .contract-calc {
+      margin-top: 14px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .contract-calc strong {
+      font-size: 1.05rem;
+      color: var(--navy);
+    }
+
+    /* ==========================================
+       Results Panel
+       ========================================== */
+    .results-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .results-header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      color: #fff;
+      padding: 20px 24px;
+    }
+
+    .results-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .results-date {
+      font-size: 0.75rem;
+      opacity: 0.75;
+    }
+
+    .total-section {
+      padding: 24px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .total-label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+
+    .total-amount {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+
+    .total-tax {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .total-tax strong {
+      color: var(--text-primary);
+      font-size: 1rem;
+    }
+
+    .total-pending {
+      font-size: 0.75rem;
+      color: var(--orange);
+      margin-top: 6px;
+    }
+
+    .chart-section {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .chart-container {
+      max-width: 260px;
+      margin: 0 auto;
+    }
+
+    /* ==========================================
+       Detail Table
+       ========================================== */
+    .detail-section {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .detail-section-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .detail-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    .detail-table th {
+      text-align: left;
+      font-weight: 500;
+      color: var(--text-muted);
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.75rem;
+    }
+
+    .detail-table th:last-child {
+      text-align: right;
+    }
+
+    .detail-table td {
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f2f5;
+    }
+
+    .detail-table td:last-child {
+      text-align: right;
+      font-weight: 500;
+    }
+
+    .detail-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .detail-table .subtotal-row {
+      font-weight: 700;
+    }
+
+    .detail-table .subtotal-row td {
+      border-top: 2px solid var(--navy);
+      padding-top: 10px;
+    }
+
+    .detail-table .tbd {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ==========================================
+       Pending Items
+       ========================================== */
+    .pending-section {
+      padding: 16px 24px;
+      background: #fffbf0;
+      border-bottom: 1px solid var(--border);
+      display: none;
+    }
+
+    .pending-section.visible {
+      display: block;
+    }
+
+    .pending-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--orange);
+      margin-bottom: 8px;
+    }
+
+    .pending-list {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      list-style: none;
+    }
+
+    .pending-list li {
+      padding: 2px 0;
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .pending-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--orange);
+    }
+
+    /* ==========================================
+       Notes
+       ========================================== */
+    .notes-section {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .notes-section .detail-section-title {
+      margin-bottom: 8px;
+    }
+
+    .notes-list {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      list-style: none;
+    }
+
+    .notes-list li {
+      padding-left: 12px;
+      position: relative;
+    }
+
+    .notes-list li::before {
+      content: '・';
+      position: absolute;
+      left: 0;
+    }
+
+    /* ==========================================
+       Action Buttons
+       ========================================== */
+    .action-bar {
+      padding: 16px 24px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      border: none;
+      font-family: var(--font);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--orange);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--orange-hover);
+    }
+
+    .btn-secondary {
+      background: var(--navy);
+      color: #fff;
+    }
+
+    .btn-secondary:hover {
+      background: var(--navy-light);
+    }
+
+    .btn-outline {
+      background: #fff;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      background: var(--bg);
+      color: var(--text-primary);
+    }
+
+    .btn-icon {
+      font-size: 1rem;
+    }
+
+    .copy-feedback {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--navy);
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 500;
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      z-index: 200;
+    }
+
+    .copy-feedback.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ==========================================
+       Mobile Total Bar
+       ========================================== */
+    .mobile-total-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--navy);
+      color: #fff;
+      padding: 14px 24px;
+      z-index: 100;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+    }
+
+    .mobile-total-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .mobile-total-label {
+      font-size: 0.75rem;
+      opacity: 0.8;
+    }
+
+    .mobile-total-amount {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    /* ==========================================
+       Responsive
+       ========================================== */
+    @media (max-width: 1023px) {
+      .app-layout {
+        grid-template-columns: 1fr;
+        padding: 20px 16px 140px;
+        gap: 20px;
+      }
+
+      .results-panel {
+        position: static;
+        max-height: none;
+      }
+
+      .mobile-total-bar {
+        display: block;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .app-header {
+        padding: 14px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+
+      .header-date {
+        display: none;
+      }
+
+      .config-section {
+        padding: 18px 16px;
+      }
+
+      .package-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stepper-value {
+        font-size: 2rem;
+      }
+
+      .total-amount {
+        font-size: 2rem;
+      }
+
+      .action-bar {
+        flex-direction: column;
+      }
+    }
+
+    /* ==========================================
+       Print Styles
+       ========================================== */
+    @media print {
+      body {
+        background: #fff;
+        font-size: 12px;
+      }
+
+      .app-header {
+        position: static;
+        background: var(--navy);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .app-layout {
+        display: block;
+        padding: 0;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      .configurator {
+        display: none;
+      }
+
+      .results-panel {
+        position: static;
+        max-height: none;
+      }
+
+      .results-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+      }
+
+      .results-header {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .action-bar {
+        display: none;
+      }
+
+      .mobile-total-bar {
+        display: none !important;
+      }
+
+      .copy-feedback {
+        display: none !important;
+      }
+
+      .chart-section {
+        page-break-inside: avoid;
+      }
+
+      .detail-section {
+        page-break-inside: avoid;
+      }
+    }
+
+    /* ==========================================
+       Scrollbar (results panel)
+       ========================================== */
+    .results-panel::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .results-panel::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .results-panel::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       Header
+       ========================================== -->
+  <header class="app-header">
+    <div class="header-brand">
+      <div class="header-logo">JUST<span>.DB</span></div>
+      <div class="header-subtitle">見積シミュレーター</div>
+    </div>
+    <div class="header-date" id="headerDate"></div>
+  </header>
+
+  <!-- ==========================================
+       Main Layout
+       ========================================== -->
+  <main class="app-layout">
+
+    <!-- Left: Configurator -->
+    <section class="configurator">
+
+      <!-- ① License Settings -->
+      <div class="config-section">
+        <div class="section-header">
+          <div class="section-icon">👥</div>
+          <div>
+            <div class="section-title">ライセンス設定</div>
+            <div class="section-subtitle">同時ログインライセンス</div>
+          </div>
+        </div>
+        <div class="section-hint">
+          全員が常時使わない場合、登録ユーザー数より少なく設定できます。5ライセンス単位での購入となります。
+        </div>
+        <div class="license-stepper">
+          <button class="stepper-btn" id="licenseMinus" aria-label="5減らす">−</button>
+          <div>
+            <div class="stepper-value" id="licenseValue" tabindex="0" role="spinbutton" aria-label="ライセンス数" aria-valuemin="5" aria-valuemax="100">10</div>
+            <div class="stepper-unit">ライセンス</div>
+          </div>
+          <button class="stepper-btn" id="licensePlus" aria-label="5増やす">＋</button>
+        </div>
+        <div class="license-slider-wrap">
+          <input type="range" class="license-slider" id="licenseSlider" min="5" max="100" step="5" value="10">
+        </div>
+        <div class="license-cost" id="licenseCostDisplay">
+          10 ライセンス × ¥15,000 = <strong>¥150,000</strong> /月
+        </div>
+      </div>
+
+      <!-- ② Package Selection -->
+      <div class="config-section">
+        <div class="section-header">
+          <div class="section-icon">📦</div>
+          <div>
+            <div class="section-title">パッケージ選択</div>
+            <div class="section-subtitle">1テナントあたり / 月額</div>
+          </div>
+        </div>
+
+        <div class="package-grid">
+          <!-- None (default) -->
+          <div class="package-card selected" data-package="none">
+            <div class="package-card-check">✓</div>
+            <div class="package-name">パッケージなし</div>
+            <div class="package-price">¥0 <span class="price-unit">/月</span></div>
+            <ul class="package-features">
+              <li>基本機能のみ</li>
+            </ul>
+          </div>
+
+          <!-- Basic -->
+          <div class="package-card" data-package="basic">
+            <div class="package-card-check">✓</div>
+            <div class="package-name">ベーシックパッケージ</div>
+            <div class="package-price">¥24,000 <span class="price-unit">/月（税別）</span></div>
+            <ul class="package-features">
+              <li>社内DB連携</li>
+              <li>全文検索</li>
+              <li>サンドボックス</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Standard (separate, full-width) -->
+        <div class="package-card" data-package="standard" style="margin-top: 16px;">
+          <div class="package-card-check">✓</div>
+          <div class="package-name">スタンダードパッケージ</div>
+          <div class="package-price-tbd">要問い合わせ</div>
+          <ul class="package-features">
+            <li>AI-OCR</li>
+            <li>大規模データ集計</li>
+            <li>自動バックアップ</li>
+          </ul>
+          <div class="package-note">※ 別途お見積もりが必要です。2026年2月17日提供開始。</div>
+        </div>
+      </div>
+
+      <!-- ③ Construction Features -->
+      <div class="config-section">
+        <div class="section-header">
+          <div class="section-icon">🔧</div>
+          <div>
+            <div class="section-title">構築機能の選択</div>
+            <div class="section-subtitle">必要な機能を選択してください（費用は別途お見積り）</div>
+          </div>
+        </div>
+        <div class="feature-list" id="featureList">
+          <!-- Generated by JS -->
+        </div>
+        <div class="selected-count" id="featureCount">選択中: <strong>0</strong> 件</div>
+      </div>
+
+      <!-- ④ Options -->
+      <div class="config-section">
+        <div class="section-header">
+          <div class="section-icon">⚙️</div>
+          <div>
+            <div class="section-title">オプション設定</div>
+            <div class="section-subtitle">費用は別途お見積り</div>
+          </div>
+        </div>
+        <div class="options-list" id="optionsList">
+          <!-- Generated by JS -->
+        </div>
+      </div>
+
+      <!-- ⑤ Contract Period -->
+      <div class="config-section">
+        <div class="section-header">
+          <div class="section-icon">📅</div>
+          <div>
+            <div class="section-title">契約期間</div>
+          </div>
+        </div>
+        <div class="period-segments" role="group" aria-label="契約期間">
+          <button class="period-btn active" data-months="12">12ヶ月</button>
+          <button class="period-btn" data-months="24">24ヶ月</button>
+          <button class="period-btn" data-months="36">36ヶ月</button>
+        </div>
+        <div class="contract-calc" id="contractCalc"></div>
+      </div>
+
+    </section>
+
+    <!-- Right: Results -->
+    <aside class="results-panel">
+      <div class="results-card">
+        <div class="results-header">
+          <div class="results-title">見積概算</div>
+          <div class="results-date" id="resultsDate"></div>
+        </div>
+
+        <div class="total-section">
+          <div class="total-label">月額合計（税別）</div>
+          <div class="total-amount" id="totalAmount">¥0</div>
+          <div class="total-tax">税込（10%）: <strong id="totalTax">¥0</strong></div>
+          <div class="total-pending" id="totalPending"></div>
+        </div>
+
+        <div class="chart-section">
+          <div class="chart-container">
+            <canvas id="costChart"></canvas>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <div class="detail-section-title">費用明細</div>
+          <table class="detail-table">
+            <thead>
+              <tr>
+                <th>項目</th>
+                <th>小計</th>
+              </tr>
+            </thead>
+            <tbody id="detailTableBody">
+              <!-- Generated by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pending-section" id="pendingSection">
+          <div class="pending-title">別途お見積り項目</div>
+          <ul class="pending-list" id="pendingList"></ul>
+        </div>
+
+        <div class="notes-section">
+          <div class="detail-section-title">注意事項</div>
+          <ul class="notes-list">
+            <li>本見積もりは概算です。正式なお見積もりは別途ご提示いたします。</li>
+            <li>ライセンス料金は税別表示です。別途消費税10%が加算されます。</li>
+            <li>同時ログインライセンスは5ライセンス単位での購入となります。</li>
+            <li>スタンダードパッケージの価格は現在公開されていないため、別途お問い合わせが必要です。</li>
+            <li>契約は月単位または年単位。契約期間中の解約は残存期間分の支払い義務が生じます。</li>
+          </ul>
+        </div>
+
+        <div class="action-bar">
+          <button class="btn btn-primary" id="btnCopy">
+            <span class="btn-icon">📋</span>コピー
+          </button>
+          <button class="btn btn-secondary" id="btnPdf">
+            <span class="btn-icon">📄</span>PDF出力
+          </button>
+          <button class="btn btn-outline" id="btnReset">
+            リセット
+          </button>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- Mobile Total Bar -->
+  <div class="mobile-total-bar">
+    <div class="mobile-total-inner">
+      <div>
+        <div class="mobile-total-label">月額合計（税込）</div>
+        <div class="mobile-total-amount" id="mobileTotalAmount">¥0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Copy Feedback Toast -->
+  <div class="copy-feedback" id="copyFeedback">クリップボードにコピーしました</div>
+
+  <!-- ==========================================
+       JavaScript
+       ========================================== -->
+  <script>
+  (function() {
+    'use strict';
+
+    // ==========================================
+    // JUST.DB 公式料金（税別）
+    // 出典：ジャストシステム公式ニュースリリース
+    // 最終確認：2026年2月
+    // ==========================================
+    const CONFIG = {
+      LICENSE_UNIT_PRICE: 15000,   // 円/月（税別）
+      LICENSE_MIN: 5,
+      LICENSE_MAX: 100,
+      LICENSE_STEP: 5,
+      BASIC_PACKAGE_PRICE: 24000,  // 円/月（税別）
+      STANDARD_PACKAGE_PRICE: null, // 価格未公表
+      TAX_RATE: 0.10,
+      ANIMATION_DURATION: 400,
+    };
+
+    const CONSTRUCTION_FEATURES = [
+      { id: 'customerManagement',  name: '顧客管理機能' },
+      { id: 'dealManagement',      name: '案件・商談管理機能' },
+      { id: 'activityLog',         name: '活動履歴管理機能' },
+      { id: 'dashboard',           name: 'ダッシュボード・レポート' },
+      { id: 'mobile',              name: 'モバイル対応設定' },
+      { id: 'roleManagement',      name: '権限・ロール管理' },
+      { id: 'externalIntegration', name: '外部システム連携' },
+      { id: 'dataMigration',       name: 'データ移行支援' },
+      { id: 'partnerManagement',   name: '代理店・パートナー管理' },
+    ];
+
+    const OPTIONS = [
+      { id: 'training', name: '導入支援・トレーニング' },
+      { id: 'support',  name: '保守・サポート契約' },
+    ];
+
+    // ==========================================
+    // State
+    // ==========================================
+    const state = {
+      licenseCount: 10,
+      selectedPackage: 'none',
+      selectedFeatures: new Set(),
+      selectedOptions: new Set(),
+      contractMonths: 12,
+    };
+
+    // Previous values for animation
+    let prevTotalMonthly = 0;
+    let prevTotalTax = 0;
+    let prevMobileTotal = 0;
+
+    // ==========================================
+    // Number Formatting
+    // ==========================================
+    const formatter = new Intl.NumberFormat('ja-JP');
+
+    function formatYen(value) {
+      if (value === null || value === undefined) return '別途';
+      return '¥' + formatter.format(value);
+    }
+
+    // ==========================================
+    // Number Animation
+    // ==========================================
+    function animateValue(el, from, to, duration, prefix) {
+      if (prefix === undefined) prefix = '¥';
+      const start = performance.now();
+
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        // easeOutCubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(from + (to - from) * eased);
+        el.textContent = prefix + formatter.format(current);
+        if (progress < 1) requestAnimationFrame(update);
+      }
+
+      requestAnimationFrame(update);
+    }
+
+    // ==========================================
+    // Calculation Engine
+    // ==========================================
+    function calculate() {
+      const licenseCost = state.licenseCount * CONFIG.LICENSE_UNIT_PRICE;
+
+      let packageCost = 0;
+      let packageLabel = 'なし';
+      let hasStandardPackage = false;
+
+      if (state.selectedPackage === 'basic') {
+        packageCost = CONFIG.BASIC_PACKAGE_PRICE;
+        packageLabel = 'ベーシック';
+      } else if (state.selectedPackage === 'standard') {
+        packageCost = 0;
+        packageLabel = 'スタンダード（要問い合わせ）';
+        hasStandardPackage = true;
+      }
+
+      const monthlySubtotal = licenseCost + packageCost;
+      const monthlyTax = Math.floor(monthlySubtotal * CONFIG.TAX_RATE);
+      const monthlyTotal = monthlySubtotal + monthlyTax;
+      const contractTotal = monthlySubtotal * state.contractMonths;
+      const contractTotalTax = Math.floor(contractTotal * CONFIG.TAX_RATE);
+
+      const pendingItems = [];
+      if (hasStandardPackage) {
+        pendingItems.push('スタンダードパッケージ料金');
+      }
+      state.selectedFeatures.forEach(function(id) {
+        var feat = CONSTRUCTION_FEATURES.find(function(f) { return f.id === id; });
+        if (feat) pendingItems.push(feat.name + '（構築費用）');
+      });
+      state.selectedOptions.forEach(function(id) {
+        var opt = OPTIONS.find(function(o) { return o.id === id; });
+        if (opt) pendingItems.push(opt.name);
+      });
+
+      return {
+        licenseCost: licenseCost,
+        packageCost: packageCost,
+        packageLabel: packageLabel,
+        hasStandardPackage: hasStandardPackage,
+        monthlySubtotal: monthlySubtotal,
+        monthlyTax: monthlyTax,
+        monthlyTotal: monthlyTotal,
+        contractTotal: contractTotal,
+        contractTotalTax: contractTotalTax,
+        contractMonths: state.contractMonths,
+        pendingItems: pendingItems,
+        hasPendingItems: pendingItems.length > 0,
+      };
+    }
+
+    // ==========================================
+    // DOM References
+    // ==========================================
+    var dom = {};
+
+    function cacheDom() {
+      dom.licenseValue = document.getElementById('licenseValue');
+      dom.licenseSlider = document.getElementById('licenseSlider');
+      dom.licenseMinus = document.getElementById('licenseMinus');
+      dom.licensePlus = document.getElementById('licensePlus');
+      dom.licenseCostDisplay = document.getElementById('licenseCostDisplay');
+      dom.featureList = document.getElementById('featureList');
+      dom.featureCount = document.getElementById('featureCount');
+      dom.optionsList = document.getElementById('optionsList');
+      dom.totalAmount = document.getElementById('totalAmount');
+      dom.totalTax = document.getElementById('totalTax');
+      dom.totalPending = document.getElementById('totalPending');
+      dom.detailTableBody = document.getElementById('detailTableBody');
+      dom.pendingSection = document.getElementById('pendingSection');
+      dom.pendingList = document.getElementById('pendingList');
+      dom.contractCalc = document.getElementById('contractCalc');
+      dom.mobileTotalAmount = document.getElementById('mobileTotalAmount');
+      dom.btnCopy = document.getElementById('btnCopy');
+      dom.btnPdf = document.getElementById('btnPdf');
+      dom.btnReset = document.getElementById('btnReset');
+      dom.copyFeedback = document.getElementById('copyFeedback');
+      dom.headerDate = document.getElementById('headerDate');
+      dom.resultsDate = document.getElementById('resultsDate');
+      dom.costChart = document.getElementById('costChart');
+    }
+
+    // ==========================================
+    // Chart
+    // ==========================================
+    var chart = null;
+
+    function initChart() {
+      var ctx = dom.costChart.getContext('2d');
+      chart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['ライセンス', 'パッケージ'],
+          datasets: [{
+            data: [0, 0],
+            backgroundColor: ['#1a3a5c', '#f07900'],
+            borderWidth: 0,
+            borderRadius: 4,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          cutout: '65%',
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                font: { family: "'Noto Sans JP'", size: 12 },
+                padding: 16,
+                usePointStyle: true,
+                pointStyle: 'circle',
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) {
+                  if (ctx.parsed === 0) return ctx.label + ': なし';
+                  return ctx.label + ': ¥' + formatter.format(ctx.parsed);
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function updateChart(data) {
+      var labels = ['ライセンス'];
+      var values = [data.licenseCost];
+      var colors = ['#1a3a5c'];
+
+      if (data.packageCost > 0) {
+        labels.push('パッケージ');
+        values.push(data.packageCost);
+        colors.push('#f07900');
+      }
+
+      if (data.hasStandardPackage) {
+        labels.push('パッケージ（要問い合わせ）');
+        values.push(0);
+        colors.push('#e1e8ef');
+      }
+
+      chart.data.labels = labels;
+      chart.data.datasets[0].data = values;
+      chart.data.datasets[0].backgroundColor = colors;
+      chart.update();
+    }
+
+    // ==========================================
+    // Render
+    // ==========================================
+    function render() {
+      var data = calculate();
+
+      // License display
+      dom.licenseValue.textContent = state.licenseCount;
+      dom.licenseValue.setAttribute('aria-valuenow', state.licenseCount);
+      dom.licenseSlider.value = state.licenseCount;
+      dom.licenseMinus.disabled = state.licenseCount <= CONFIG.LICENSE_MIN;
+      dom.licensePlus.disabled = state.licenseCount >= CONFIG.LICENSE_MAX;
+      dom.licenseCostDisplay.innerHTML =
+        state.licenseCount + ' ライセンス × ¥15,000 = <strong>' + formatYen(data.licenseCost) + '</strong> /月';
+
+      // Feature count
+      dom.featureCount.innerHTML = '選択中: <strong>' + state.selectedFeatures.size + '</strong> 件';
+
+      // Totals with animation
+      animateValue(dom.totalAmount, prevTotalMonthly, data.monthlySubtotal, CONFIG.ANIMATION_DURATION);
+      prevTotalMonthly = data.monthlySubtotal;
+
+      animateValue(dom.totalTax, prevTotalTax, data.monthlyTotal, CONFIG.ANIMATION_DURATION);
+      prevTotalTax = data.monthlyTotal;
+
+      animateValue(dom.mobileTotalAmount, prevMobileTotal, data.monthlyTotal, CONFIG.ANIMATION_DURATION);
+      prevMobileTotal = data.monthlyTotal;
+
+      // Pending notice
+      if (data.hasPendingItems) {
+        dom.totalPending.textContent = '※ 別途お見積り項目あり';
+      } else {
+        dom.totalPending.textContent = '';
+      }
+
+      // Detail table
+      var rows = '';
+      rows += '<tr><td>ライセンス費用（' + state.licenseCount + '名 × ¥15,000）</td><td>' + formatYen(data.licenseCost) + ' /月</td></tr>';
+
+      if (state.selectedPackage === 'basic') {
+        rows += '<tr><td>ベーシックパッケージ</td><td>' + formatYen(data.packageCost) + ' /月</td></tr>';
+      } else if (state.selectedPackage === 'standard') {
+        rows += '<tr><td>スタンダードパッケージ</td><td class="tbd">要問い合わせ</td></tr>';
+      }
+
+      rows += '<tr class="subtotal-row"><td>月額合計（税別）</td><td>' + formatYen(data.monthlySubtotal) + '</td></tr>';
+      rows += '<tr><td>消費税（10%）</td><td>' + formatYen(data.monthlyTax) + '</td></tr>';
+      rows += '<tr class="subtotal-row"><td>月額合計（税込）</td><td>' + formatYen(data.monthlyTotal) + '</td></tr>';
+      rows += '<tr><td>契約期間合計（' + data.contractMonths + 'ヶ月・税別）</td><td>' + formatYen(data.contractTotal) + '</td></tr>';
+      rows += '<tr class="subtotal-row"><td>契約期間合計（税込）</td><td>' + formatYen(data.contractTotal + data.contractTotalTax) + '</td></tr>';
+
+      dom.detailTableBody.innerHTML = rows;
+
+      // Pending section
+      if (data.hasPendingItems) {
+        dom.pendingSection.classList.add('visible');
+        dom.pendingList.innerHTML = data.pendingItems.map(function(item) {
+          return '<li>' + item + '</li>';
+        }).join('');
+      } else {
+        dom.pendingSection.classList.remove('visible');
+      }
+
+      // Contract calc
+      dom.contractCalc.innerHTML =
+        formatYen(data.monthlySubtotal) + ' × ' + data.contractMonths + 'ヶ月 = <strong>' + formatYen(data.contractTotal) + '</strong>（税別）';
+
+      // Chart
+      updateChart(data);
+    }
+
+    // ==========================================
+    // Build Feature List
+    // ==========================================
+    function buildFeatureList() {
+      dom.featureList.innerHTML = CONSTRUCTION_FEATURES.map(function(feat) {
+        return '<label class="feature-item" data-feature="' + feat.id + '">' +
+          '<input type="checkbox" value="' + feat.id + '">' +
+          '<div class="feature-checkbox-visual">✓</div>' +
+          '<span class="feature-label">' + feat.name + '</span>' +
+          '<span class="feature-badge">別途</span>' +
+          '</label>';
+      }).join('');
+    }
+
+    function buildOptionsList() {
+      dom.optionsList.innerHTML = OPTIONS.map(function(opt) {
+        return '<label class="feature-item" data-option="' + opt.id + '">' +
+          '<input type="checkbox" value="' + opt.id + '">' +
+          '<div class="feature-checkbox-visual">✓</div>' +
+          '<span class="feature-label">' + opt.name + '</span>' +
+          '<span class="feature-badge">別途</span>' +
+          '</label>';
+      }).join('');
+    }
+
+    // ==========================================
+    // Event Handlers
+    // ==========================================
+    function setLicenseCount(value) {
+      value = Math.max(CONFIG.LICENSE_MIN, Math.min(CONFIG.LICENSE_MAX, value));
+      // Snap to step
+      value = Math.round(value / CONFIG.LICENSE_STEP) * CONFIG.LICENSE_STEP;
+      state.licenseCount = value;
+      render();
+    }
+
+    function attachEvents() {
+      // License stepper
+      dom.licenseMinus.addEventListener('click', function() {
+        setLicenseCount(state.licenseCount - CONFIG.LICENSE_STEP);
+      });
+
+      dom.licensePlus.addEventListener('click', function() {
+        setLicenseCount(state.licenseCount + CONFIG.LICENSE_STEP);
+      });
+
+      // License slider
+      dom.licenseSlider.addEventListener('input', function() {
+        setLicenseCount(parseInt(this.value, 10));
+      });
+
+      // License direct edit
+      dom.licenseValue.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          var val = parseInt(this.textContent.replace(/[^0-9]/g, ''), 10);
+          if (!isNaN(val)) {
+            setLicenseCount(val);
+          }
+          this.blur();
+        } else if (e.key === 'Escape') {
+          this.textContent = state.licenseCount;
+          this.blur();
+        }
+      });
+
+      dom.licenseValue.addEventListener('focus', function() {
+        // Select all text on focus
+        var range = document.createRange();
+        range.selectNodeContents(this);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      });
+
+      dom.licenseValue.addEventListener('blur', function() {
+        var val = parseInt(this.textContent.replace(/[^0-9]/g, ''), 10);
+        if (!isNaN(val)) {
+          setLicenseCount(val);
+        } else {
+          this.textContent = state.licenseCount;
+        }
+      });
+
+      // Long press for stepper buttons
+      var longPressTimer = null;
+      var longPressInterval = null;
+
+      function startLongPress(direction) {
+        longPressTimer = setTimeout(function() {
+          longPressInterval = setInterval(function() {
+            setLicenseCount(state.licenseCount + direction * CONFIG.LICENSE_STEP);
+          }, 120);
+        }, 400);
+      }
+
+      function stopLongPress() {
+        clearTimeout(longPressTimer);
+        clearInterval(longPressInterval);
+      }
+
+      dom.licenseMinus.addEventListener('mousedown', function() { startLongPress(-1); });
+      dom.licenseMinus.addEventListener('mouseup', stopLongPress);
+      dom.licenseMinus.addEventListener('mouseleave', stopLongPress);
+      dom.licenseMinus.addEventListener('touchstart', function(e) { e.preventDefault(); startLongPress(-1); });
+      dom.licenseMinus.addEventListener('touchend', function(e) { e.preventDefault(); stopLongPress(); setLicenseCount(state.licenseCount - CONFIG.LICENSE_STEP); });
+
+      dom.licensePlus.addEventListener('mousedown', function() { startLongPress(1); });
+      dom.licensePlus.addEventListener('mouseup', stopLongPress);
+      dom.licensePlus.addEventListener('mouseleave', stopLongPress);
+      dom.licensePlus.addEventListener('touchstart', function(e) { e.preventDefault(); startLongPress(1); });
+      dom.licensePlus.addEventListener('touchend', function(e) { e.preventDefault(); stopLongPress(); setLicenseCount(state.licenseCount + CONFIG.LICENSE_STEP); });
+
+      // Package cards
+      document.querySelectorAll('.package-card').forEach(function(card) {
+        card.addEventListener('click', function() {
+          document.querySelectorAll('.package-card').forEach(function(c) {
+            c.classList.remove('selected');
+          });
+          this.classList.add('selected');
+          state.selectedPackage = this.dataset.package;
+          render();
+        });
+      });
+
+      // Feature checkboxes (event delegation)
+      dom.featureList.addEventListener('click', function(e) {
+        var item = e.target.closest('.feature-item');
+        if (!item) return;
+        var checkbox = item.querySelector('input[type="checkbox"]');
+        checkbox.checked = !checkbox.checked;
+        item.classList.toggle('checked', checkbox.checked);
+        if (checkbox.checked) {
+          state.selectedFeatures.add(checkbox.value);
+        } else {
+          state.selectedFeatures.delete(checkbox.value);
+        }
+        render();
+      });
+
+      // Option checkboxes (event delegation)
+      dom.optionsList.addEventListener('click', function(e) {
+        var item = e.target.closest('.feature-item');
+        if (!item) return;
+        var checkbox = item.querySelector('input[type="checkbox"]');
+        checkbox.checked = !checkbox.checked;
+        item.classList.toggle('checked', checkbox.checked);
+        if (checkbox.checked) {
+          state.selectedOptions.add(checkbox.value);
+        } else {
+          state.selectedOptions.delete(checkbox.value);
+        }
+        render();
+      });
+
+      // Contract period
+      document.querySelectorAll('.period-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.period-btn').forEach(function(b) {
+            b.classList.remove('active');
+          });
+          this.classList.add('active');
+          state.contractMonths = parseInt(this.dataset.months, 10);
+          render();
+        });
+      });
+
+      // Copy
+      dom.btnCopy.addEventListener('click', function() {
+        var text = generateSummary();
+        navigator.clipboard.writeText(text).then(function() {
+          dom.copyFeedback.classList.add('show');
+          setTimeout(function() {
+            dom.copyFeedback.classList.remove('show');
+          }, 2000);
+        });
+      });
+
+      // PDF
+      dom.btnPdf.addEventListener('click', function() {
+        window.print();
+      });
+
+      // Reset
+      dom.btnReset.addEventListener('click', function() {
+        state.licenseCount = 10;
+        state.selectedPackage = 'none';
+        state.selectedFeatures.clear();
+        state.selectedOptions.clear();
+        state.contractMonths = 12;
+
+        // Reset UI elements
+        document.querySelectorAll('.package-card').forEach(function(c) {
+          c.classList.remove('selected');
+        });
+        document.querySelector('[data-package="none"]').classList.add('selected');
+
+        document.querySelectorAll('.feature-item').forEach(function(item) {
+          item.classList.remove('checked');
+          var cb = item.querySelector('input[type="checkbox"]');
+          if (cb) cb.checked = false;
+        });
+
+        document.querySelectorAll('.period-btn').forEach(function(b) {
+          b.classList.remove('active');
+        });
+        document.querySelector('[data-months="12"]').classList.add('active');
+
+        prevTotalMonthly = 0;
+        prevTotalTax = 0;
+        prevMobileTotal = 0;
+
+        render();
+      });
+    }
+
+    // ==========================================
+    // Summary Text (for clipboard)
+    // ==========================================
+    function generateSummary() {
+      var data = calculate();
+      var today = new Date();
+      var dateStr = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+
+      var lines = [];
+      lines.push('========================================');
+      lines.push('JUST.DB 見積概算');
+      lines.push('作成日: ' + dateStr);
+      lines.push('========================================');
+      lines.push('');
+      lines.push('■ ライセンス');
+      lines.push('  同時ログインライセンス: ' + state.licenseCount + ' ライセンス');
+      lines.push('  月額: ' + formatYen(data.licenseCost) + '（税別）');
+      lines.push('');
+
+      if (state.selectedPackage !== 'none') {
+        lines.push('■ パッケージ');
+        if (state.selectedPackage === 'basic') {
+          lines.push('  ベーシックパッケージ: ' + formatYen(data.packageCost) + '/月（税別）');
+        } else {
+          lines.push('  スタンダードパッケージ: 要問い合わせ');
+        }
+        lines.push('');
+      }
+
+      lines.push('■ 月額費用');
+      lines.push('  月額合計（税別）: ' + formatYen(data.monthlySubtotal));
+      lines.push('  消費税（10%）: ' + formatYen(data.monthlyTax));
+      lines.push('  月額合計（税込）: ' + formatYen(data.monthlyTotal));
+      lines.push('');
+
+      lines.push('■ 契約期間: ' + data.contractMonths + 'ヶ月');
+      lines.push('  契約期間合計（税別）: ' + formatYen(data.contractTotal));
+      lines.push('  契約期間合計（税込）: ' + formatYen(data.contractTotal + data.contractTotalTax));
+      lines.push('');
+
+      if (state.selectedFeatures.size > 0) {
+        lines.push('■ 構築機能（費用別途）');
+        state.selectedFeatures.forEach(function(id) {
+          var feat = CONSTRUCTION_FEATURES.find(function(f) { return f.id === id; });
+          if (feat) lines.push('  - ' + feat.name);
+        });
+        lines.push('');
+      }
+
+      if (state.selectedOptions.size > 0) {
+        lines.push('■ オプション（費用別途）');
+        state.selectedOptions.forEach(function(id) {
+          var opt = OPTIONS.find(function(o) { return o.id === id; });
+          if (opt) lines.push('  - ' + opt.name);
+        });
+        lines.push('');
+      }
+
+      lines.push('========================================');
+      lines.push('※ 本見積もりは概算です。正式なお見積もりは別途ご提示いたします。');
+      lines.push('========================================');
+
+      return lines.join('\n');
+    }
+
+    // ==========================================
+    // Set Date
+    // ==========================================
+    function setDate() {
+      var today = new Date();
+      var y = today.getFullYear();
+      var m = today.getMonth() + 1;
+      var d = today.getDate();
+      var dateStr = y + '年' + m + '月' + d + '日';
+      dom.headerDate.textContent = dateStr;
+      dom.resultsDate.textContent = '作成日: ' + dateStr;
+    }
+
+    // ==========================================
+    // Init
+    // ==========================================
+    function init() {
+      cacheDom();
+      setDate();
+      buildFeatureList();
+      buildOptionsList();
+      initChart();
+      attachEvents();
+      render();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  })();
+  </script>
+</body>
+</html>
