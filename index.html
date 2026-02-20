@@ -37,976 +37,388 @@
     /* ==========================================
        Reset & Base
        ========================================== */
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      font-size: 16px;
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-primary);
-      line-height: 1.6;
-      min-height: 100vh;
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
 
     /* ==========================================
        Header
        ========================================== */
     .app-header {
       background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-      color: #fff;
-      padding: 20px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      color: #fff; padding: 20px 32px; display: flex; align-items: center;
+      justify-content: space-between; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      position: sticky; top: 0; z-index: 100;
     }
-
-    .header-brand {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .header-logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
-
-    .header-logo span {
-      color: var(--orange);
-    }
-
-    .header-subtitle {
-      font-size: 0.875rem;
-      opacity: 0.85;
-      font-weight: 400;
-    }
-
-    .header-date {
-      font-size: 0.8rem;
-      opacity: 0.7;
-    }
+    .header-brand { display: flex; align-items: center; gap: 16px; }
+    .header-logo { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.02em; }
+    .header-logo span { color: var(--orange); }
+    .header-subtitle { font-size: 0.875rem; opacity: 0.85; font-weight: 400; }
+    .header-date { font-size: 0.8rem; opacity: 0.7; }
 
     /* ==========================================
        Layout
        ========================================== */
     .app-layout {
-      display: grid;
-      grid-template-columns: 1fr 440px;
-      gap: 28px;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 28px 32px 120px;
+      display: grid; grid-template-columns: 1fr 460px; gap: 28px;
+      max-width: 1440px; margin: 0 auto; padding: 28px 32px 120px;
     }
-
-    .configurator {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
+    .configurator { display: flex; flex-direction: column; gap: 20px; }
     .results-panel {
-      position: sticky;
-      top: 88px;
-      height: fit-content;
-      max-height: calc(100vh - 108px);
-      overflow-y: auto;
+      position: sticky; top: 88px; height: fit-content;
+      max-height: calc(100vh - 108px); overflow-y: auto;
     }
 
     /* ==========================================
        Config Sections
        ========================================== */
     .config-section {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      padding: 24px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      transition: var(--transition);
+      background: var(--card-bg); border-radius: var(--radius); padding: 24px;
+      box-shadow: var(--shadow); border: 1px solid var(--border); transition: var(--transition);
     }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
+    .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
     .section-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: var(--radius-sm);
-      background: var(--orange-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      flex-shrink: 0;
+      width: 36px; height: 36px; border-radius: var(--radius-sm);
+      background: var(--orange-light); display: flex; align-items: center;
+      justify-content: center; font-size: 1.1rem; flex-shrink: 0;
     }
-
-    .section-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--navy);
-    }
-
-    .section-subtitle {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
+    .section-title { font-size: 1rem; font-weight: 700; color: var(--navy); }
+    .section-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
     .section-hint {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      background: var(--bg);
-      padding: 8px 12px;
-      border-radius: var(--radius-sm);
-      margin-bottom: 12px;
-      line-height: 1.5;
+      font-size: 0.8rem; color: var(--text-secondary); background: var(--bg);
+      padding: 8px 12px; border-radius: var(--radius-sm); margin-bottom: 12px; line-height: 1.5;
     }
 
     /* ==========================================
        License Stepper
        ========================================== */
-    .license-stepper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-
+    .license-stepper { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 16px; }
     .stepper-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      border: 2px solid var(--navy);
-      background: #fff;
-      color: var(--navy);
-      font-size: 1.3rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: var(--transition);
-      user-select: none;
+      width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--navy);
+      background: #fff; color: var(--navy); font-size: 1.3rem; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: var(--transition); user-select: none;
     }
-
-    .stepper-btn:hover:not(:disabled) {
-      background: var(--navy);
-      color: #fff;
-    }
-
-    .stepper-btn:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
-
+    .stepper-btn:hover:not(:disabled) { background: var(--navy); color: #fff; }
+    .stepper-btn:disabled { opacity: 0.3; cursor: not-allowed; }
     .stepper-value {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--navy);
-      min-width: 100px;
-      text-align: center;
-      cursor: text;
-      border: 2px solid transparent;
-      border-radius: var(--radius-sm);
-      padding: 4px 8px;
-      transition: var(--transition);
+      font-size: 2.5rem; font-weight: 700; color: var(--navy); min-width: 100px;
+      text-align: center; cursor: text; border: 2px solid transparent;
+      border-radius: var(--radius-sm); padding: 4px 8px; transition: var(--transition);
     }
-
-    .stepper-value:focus {
-      outline: none;
-      border-color: var(--orange);
-      background: var(--orange-light);
-    }
-
-    .stepper-unit {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      font-weight: 500;
-    }
-
-    .license-slider-wrap {
-      padding: 0 4px;
-      margin-bottom: 12px;
-    }
-
+    .stepper-value:focus { outline: none; border-color: var(--orange); background: var(--orange-light); }
+    .stepper-unit { font-size: 0.9rem; color: var(--text-secondary); font-weight: 500; }
+    .license-slider-wrap { padding: 0 4px; margin-bottom: 12px; }
     .license-slider {
-      width: 100%;
-      height: 6px;
-      -webkit-appearance: none;
-      appearance: none;
-      background: var(--border);
-      border-radius: 3px;
-      outline: none;
-      cursor: pointer;
+      width: 100%; height: 6px; -webkit-appearance: none; appearance: none;
+      background: var(--border); border-radius: 3px; outline: none; cursor: pointer;
     }
-
     .license-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: var(--orange);
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(240, 121, 0, 0.3);
+      -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
+      background: var(--orange); cursor: pointer; box-shadow: 0 2px 6px rgba(240,121,0,0.3);
       transition: transform 0.15s ease;
     }
-
-    .license-slider::-webkit-slider-thumb:hover {
-      transform: scale(1.15);
-    }
-
+    .license-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
     .license-slider::-moz-range-thumb {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: var(--orange);
-      cursor: pointer;
-      border: none;
-      box-shadow: 0 2px 6px rgba(240, 121, 0, 0.3);
+      width: 22px; height: 22px; border-radius: 50%; background: var(--orange);
+      cursor: pointer; border: none; box-shadow: 0 2px 6px rgba(240,121,0,0.3);
     }
-
-    .license-cost {
-      text-align: center;
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-    }
-
-    .license-cost strong {
-      color: var(--orange);
-      font-size: 1.1rem;
-    }
+    .license-cost { text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
+    .license-cost strong { color: var(--orange); font-size: 1.1rem; }
 
     /* ==========================================
        Package Cards
        ========================================== */
-    .package-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
+    .package-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
     .package-card {
-      border: 2px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      cursor: pointer;
-      transition: var(--transition);
-      position: relative;
+      border: 2px solid var(--border); border-radius: var(--radius); padding: 18px;
+      cursor: pointer; transition: var(--transition); position: relative;
     }
-
-    .package-card:hover {
-      border-color: var(--navy-light);
-      box-shadow: var(--shadow);
-    }
-
-    .package-card.selected {
-      border-color: var(--orange);
-      background: var(--orange-light);
-      box-shadow: 0 0 0 3px rgba(240, 121, 0, 0.15);
-    }
-
+    .package-card:hover { border-color: var(--navy-light); box-shadow: var(--shadow); }
+    .package-card.selected { border-color: var(--orange); background: var(--orange-light); box-shadow: 0 0 0 3px rgba(240,121,0,0.15); }
     .package-card-check {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      border: 2px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      transition: var(--transition);
+      position: absolute; top: 10px; right: 10px; width: 22px; height: 22px;
+      border-radius: 50%; border: 2px solid var(--border); display: flex;
+      align-items: center; justify-content: center; font-size: 0.7rem; transition: var(--transition);
     }
-
-    .package-card.selected .package-card-check {
-      background: var(--orange);
-      border-color: var(--orange);
-      color: #fff;
-    }
-
-    .package-name {
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--navy);
-      margin-bottom: 8px;
-    }
-
-    .package-price {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--orange);
-      margin-bottom: 12px;
-    }
-
-    .package-price .price-unit {
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-    }
-
-    .package-price-tbd {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      background: var(--bg);
-      padding: 4px 10px;
-      border-radius: 4px;
-      display: inline-block;
-      margin-bottom: 12px;
-    }
-
-    .package-features {
-      list-style: none;
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-    }
-
-    .package-features li {
-      padding: 3px 0;
-      padding-left: 18px;
-      position: relative;
-    }
-
-    .package-features li::before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: var(--success);
-      font-weight: 700;
-    }
-
+    .package-card.selected .package-card-check { background: var(--orange); border-color: var(--orange); color: #fff; }
+    .package-name { font-weight: 700; font-size: 0.85rem; color: var(--navy); margin-bottom: 6px; }
+    .package-price { font-size: 1.15rem; font-weight: 700; color: var(--orange); margin-bottom: 10px; }
+    .package-price .price-unit { font-size: 0.7rem; font-weight: 500; color: var(--text-secondary); }
+    .package-features { list-style: none; font-size: 0.75rem; color: var(--text-secondary); }
+    .package-features li { padding: 2px 0; padding-left: 16px; position: relative; }
+    .package-features li::before { content: '✓'; position: absolute; left: 0; color: var(--success); font-weight: 700; }
     .package-note {
-      margin-top: 12px;
-      padding: 8px 12px;
-      background: #fef3cd;
-      border-radius: var(--radius-sm);
-      font-size: 0.75rem;
-      color: #856404;
-      display: none;
+      margin-top: 10px; padding: 6px 10px; background: #fef3cd; border-radius: var(--radius-sm);
+      font-size: 0.7rem; color: #856404; display: none;
     }
-
-    .package-card.selected .package-note {
-      display: block;
-    }
+    .package-card.selected .package-note { display: block; }
 
     /* ==========================================
-       Feature Checkboxes
+       Comparison Table (collapsible)
        ========================================== */
-    .feature-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .comparison-toggle {
+      margin-top: 16px; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
     }
-
-    .feature-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
-      cursor: pointer;
-      transition: var(--transition);
+    .comparison-toggle summary {
+      padding: 10px 14px; font-size: 0.85rem; font-weight: 700; color: var(--navy);
+      cursor: pointer; background: var(--bg); list-style: none; display: flex;
+      align-items: center; gap: 6px;
     }
-
-    .feature-item:hover {
-      border-color: var(--navy-light);
-      background: #f8f9fd;
+    .comparison-toggle summary::before { content: '▶'; font-size: 0.65rem; transition: transform 0.2s; }
+    .comparison-toggle[open] summary::before { transform: rotate(90deg); }
+    .comparison-table {
+      width: 100%; border-collapse: collapse; font-size: 0.75rem;
     }
-
-    .feature-item.checked {
-      border-color: var(--orange);
-      background: var(--orange-light);
+    .comparison-table th, .comparison-table td {
+      padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: center;
     }
-
-    .feature-item input[type="checkbox"] {
-      display: none;
-    }
-
-    .feature-checkbox-visual {
-      width: 20px;
-      height: 20px;
-      border-radius: 4px;
-      border: 2px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: var(--transition);
-      font-size: 0.7rem;
-      color: transparent;
-    }
-
-    .feature-item.checked .feature-checkbox-visual {
-      background: var(--orange);
-      border-color: var(--orange);
-      color: #fff;
-    }
-
-    .feature-label {
-      flex: 1;
-      font-size: 0.875rem;
-      font-weight: 500;
-    }
-
-    .feature-badge {
-      font-size: 0.7rem;
-      padding: 2px 8px;
-      border-radius: 4px;
-      background: var(--bg);
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .selected-count {
-      text-align: right;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 8px;
-    }
-
-    .selected-count strong {
-      color: var(--orange);
-    }
+    .comparison-table th { background: var(--navy); color: #fff; font-weight: 500; font-size: 0.7rem; }
+    .comparison-table th:first-child { text-align: left; }
+    .comparison-table td:first-child { text-align: left; font-weight: 500; color: var(--text-primary); }
+    .comparison-table tr:last-child td { border-bottom: none; }
+    .comparison-table tr:nth-child(even) { background: #f8f9fd; }
 
     /* ==========================================
-       Options
+       Phase Slider Rows (Construction Cost)
        ========================================== */
-    .options-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .phase-list { display: flex; flex-direction: column; gap: 14px; }
+    .phase-row {
+      padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+      background: #fff; transition: var(--transition);
+    }
+    .phase-row-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+    .phase-name { font-size: 0.85rem; font-weight: 700; color: var(--navy); }
+    .phase-subtotal { font-size: 0.9rem; font-weight: 700; color: var(--orange); }
+    .phase-meta { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 8px; }
+    .phase-slider-row { display: flex; align-items: center; gap: 10px; }
+    .phase-slider {
+      flex: 1; height: 5px; -webkit-appearance: none; appearance: none;
+      background: var(--border); border-radius: 3px; outline: none; cursor: pointer;
+    }
+    .phase-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+      background: var(--navy); cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+    .phase-slider::-moz-range-thumb {
+      width: 18px; height: 18px; border-radius: 50%; background: var(--navy);
+      cursor: pointer; border: none;
+    }
+    .phase-hours { font-size: 0.85rem; font-weight: 700; color: var(--navy); min-width: 50px; text-align: right; }
+    .construction-total-bar {
+      margin-top: 16px; padding: 14px 16px; background: var(--navy); color: #fff;
+      border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center;
+    }
+    .construction-total-label { font-size: 0.85rem; font-weight: 500; }
+    .construction-total-value { font-size: 1.2rem; font-weight: 700; }
+
+    /* ==========================================
+       Support Pack
+       ========================================== */
+    .support-toggle-wrap { margin-bottom: 14px; }
+    .support-toggle-label {
+      display: flex; align-items: center; gap: 10px; cursor: pointer;
+      font-size: 0.875rem; font-weight: 500;
+    }
+    .support-toggle-label input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--orange); cursor: pointer; }
+    .support-pack-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    .support-pack-card {
+      border: 2px solid var(--border); border-radius: var(--radius-sm); padding: 14px;
+      cursor: pointer; transition: var(--transition); text-align: center;
+    }
+    .support-pack-card:hover { border-color: var(--navy-light); }
+    .support-pack-card.selected { border-color: var(--orange); background: var(--orange-light); }
+    .support-pack-name { font-size: 0.8rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .support-pack-price { font-size: 1rem; font-weight: 700; color: var(--orange); }
+    .support-pack-detail { font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; }
+    .support-pack-unit { font-size: 0.7rem; color: var(--text-secondary); margin-top: 2px; }
+    .support-pack-area { display: none; }
+    .support-pack-area.visible { display: block; }
+    .support-note {
+      margin-top: 10px; font-size: 0.7rem; color: var(--text-muted); line-height: 1.6;
+      padding: 8px 10px; background: var(--bg); border-radius: var(--radius-sm);
+    }
+    .support-recommendation {
+      margin-top: 10px; padding: 10px 12px; background: #e8f5e9; border-radius: var(--radius-sm);
+      font-size: 0.75rem; color: #2e7d32; font-weight: 500;
     }
 
     /* ==========================================
-       Contract Period Segments
+       Contract Period
        ========================================== */
     .period-segments {
-      display: flex;
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      border: 2px solid var(--navy);
+      display: flex; border-radius: var(--radius-sm); overflow: hidden; border: 2px solid var(--navy);
     }
-
     .period-btn {
-      flex: 1;
-      padding: 12px;
-      border: none;
-      background: #fff;
-      color: var(--navy);
-      font-family: var(--font);
-      font-size: 0.9rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: var(--transition);
-      text-align: center;
+      flex: 1; padding: 12px; border: none; background: #fff; color: var(--navy);
+      font-family: var(--font); font-size: 0.9rem; font-weight: 700;
+      cursor: pointer; transition: var(--transition); text-align: center;
     }
-
-    .period-btn:not(:last-child) {
-      border-right: 2px solid var(--navy);
-    }
-
-    .period-btn:hover:not(.active) {
-      background: #eef2f7;
-    }
-
-    .period-btn.active {
-      background: var(--navy);
-      color: #fff;
-    }
-
-    .contract-calc {
-      margin-top: 14px;
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-    }
-
-    .contract-calc strong {
-      font-size: 1.05rem;
-      color: var(--navy);
-    }
+    .period-btn:not(:last-child) { border-right: 2px solid var(--navy); }
+    .period-btn:hover:not(.active) { background: #eef2f7; }
+    .period-btn.active { background: var(--navy); color: #fff; }
+    .contract-calc { margin-top: 14px; text-align: center; font-size: 0.85rem; color: var(--text-secondary); }
+    .contract-calc strong { font-size: 1.05rem; color: var(--navy); }
 
     /* ==========================================
        Results Panel
        ========================================== */
     .results-card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-lg);
-      border: 1px solid var(--border);
-      overflow: hidden;
+      background: var(--card-bg); border-radius: var(--radius);
+      box-shadow: var(--shadow-lg); border: 1px solid var(--border); overflow: hidden;
     }
-
     .results-header {
       background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-      color: #fff;
-      padding: 20px 24px;
+      color: #fff; padding: 18px 24px;
     }
+    .results-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+    .results-date { font-size: 0.75rem; opacity: 0.75; }
 
-    .results-title {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .results-date {
-      font-size: 0.75rem;
-      opacity: 0.75;
-    }
-
-    .total-section {
-      padding: 24px;
-      text-align: center;
+    .result-category {
+      padding: 10px 24px; background: var(--bg); font-size: 0.75rem;
+      font-weight: 700; color: var(--navy); letter-spacing: 0.05em;
       border-bottom: 1px solid var(--border);
     }
 
-    .total-label {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      margin-bottom: 4px;
-    }
+    .total-section { padding: 20px 24px; text-align: center; border-bottom: 1px solid var(--border); }
+    .total-label { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 4px; }
+    .total-amount { font-size: 2.2rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+    .total-tax { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+    .total-tax strong { color: var(--text-primary); font-size: 1rem; }
 
-    .total-amount {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--navy);
-      line-height: 1.2;
+    .grand-total-section {
+      padding: 20px 24px; text-align: center; border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, #f8f9fd 0%, #fff3e6 100%);
     }
+    .grand-total-label { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 4px; }
+    .grand-total-amount { font-size: 2rem; font-weight: 700; color: var(--orange); line-height: 1.2; }
+    .grand-total-breakdown { font-size: 0.75rem; color: var(--text-muted); margin-top: 6px; }
 
-    .total-tax {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .total-tax strong {
-      color: var(--text-primary);
-      font-size: 1rem;
-    }
-
-    .total-pending {
-      font-size: 0.75rem;
-      color: var(--orange);
-      margin-top: 6px;
-    }
-
-    .chart-section {
-      padding: 20px 24px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .chart-container {
-      max-width: 260px;
-      margin: 0 auto;
-    }
+    .chart-section { padding: 20px 24px; border-bottom: 1px solid var(--border); }
+    .chart-container { max-width: 240px; margin: 0 auto; }
 
     /* ==========================================
        Detail Table
        ========================================== */
-    .detail-section {
-      padding: 20px 24px;
-      border-bottom: 1px solid var(--border);
-    }
-
+    .detail-section { padding: 16px 24px; border-bottom: 1px solid var(--border); }
     .detail-section-title {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      font-size: 0.75rem; font-weight: 700; color: var(--navy);
+      margin-bottom: 10px; letter-spacing: 0.05em;
     }
-
-    .detail-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.8rem;
-    }
-
+    .detail-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
     .detail-table th {
-      text-align: left;
-      font-weight: 500;
-      color: var(--text-muted);
-      padding: 6px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.75rem;
+      text-align: left; font-weight: 500; color: var(--text-muted);
+      padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 0.7rem;
     }
-
-    .detail-table th:last-child {
-      text-align: right;
-    }
-
-    .detail-table td {
-      padding: 8px 0;
-      border-bottom: 1px solid #f0f2f5;
-    }
-
-    .detail-table td:last-child {
-      text-align: right;
-      font-weight: 500;
-    }
-
-    .detail-table tr:last-child td {
-      border-bottom: none;
-    }
-
-    .detail-table .subtotal-row {
-      font-weight: 700;
-    }
-
-    .detail-table .subtotal-row td {
-      border-top: 2px solid var(--navy);
-      padding-top: 10px;
-    }
-
-    .detail-table .tbd {
-      color: var(--text-muted);
-      font-style: italic;
-    }
-
-    /* ==========================================
-       Pending Items
-       ========================================== */
-    .pending-section {
-      padding: 16px 24px;
-      background: #fffbf0;
-      border-bottom: 1px solid var(--border);
-      display: none;
-    }
-
-    .pending-section.visible {
-      display: block;
-    }
-
-    .pending-title {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--orange);
-      margin-bottom: 8px;
-    }
-
-    .pending-list {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      list-style: none;
-    }
-
-    .pending-list li {
-      padding: 2px 0;
-      padding-left: 14px;
-      position: relative;
-    }
-
-    .pending-list li::before {
-      content: '•';
-      position: absolute;
-      left: 0;
-      color: var(--orange);
+    .detail-table th:last-child { text-align: right; }
+    .detail-table td { padding: 6px 0; border-bottom: 1px solid #f0f2f5; }
+    .detail-table td:last-child { text-align: right; font-weight: 500; }
+    .detail-table tr:last-child td { border-bottom: none; }
+    .detail-table .subtotal-row { font-weight: 700; }
+    .detail-table .subtotal-row td { border-top: 2px solid var(--navy); padding-top: 8px; }
+    .detail-table .tbd { color: var(--text-muted); font-style: italic; }
+    .detail-table .section-label td {
+      font-weight: 700; color: var(--navy); font-size: 0.72rem;
+      padding-top: 12px; border-bottom: 1px solid var(--border);
     }
 
     /* ==========================================
        Notes
        ========================================== */
-    .notes-section {
-      padding: 16px 24px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .notes-section .detail-section-title {
-      margin-bottom: 8px;
-    }
-
-    .notes-list {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-      list-style: none;
-    }
-
-    .notes-list li {
-      padding-left: 12px;
-      position: relative;
-    }
-
-    .notes-list li::before {
-      content: '・';
-      position: absolute;
-      left: 0;
-    }
+    .notes-section { padding: 14px 24px; border-bottom: 1px solid var(--border); }
+    .notes-section .detail-section-title { margin-bottom: 6px; }
+    .notes-category { font-size: 0.7rem; font-weight: 700; color: var(--navy); margin-top: 8px; margin-bottom: 4px; }
+    .notes-list { font-size: 0.68rem; color: var(--text-muted); line-height: 1.7; list-style: none; }
+    .notes-list li { padding-left: 12px; position: relative; }
+    .notes-list li::before { content: '・'; position: absolute; left: 0; }
 
     /* ==========================================
        Action Buttons
        ========================================== */
-    .action-bar {
-      padding: 16px 24px;
-      display: flex;
-      gap: 8px;
-    }
-
+    .action-bar { padding: 14px 24px; display: flex; gap: 8px; }
     .btn {
-      flex: 1;
-      padding: 10px 16px;
-      border-radius: var(--radius-sm);
-      border: none;
-      font-family: var(--font);
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+      flex: 1; padding: 10px 16px; border-radius: var(--radius-sm); border: none;
+      font-family: var(--font); font-size: 0.8rem; font-weight: 700; cursor: pointer;
+      transition: var(--transition); display: flex; align-items: center;
+      justify-content: center; gap: 6px;
     }
-
-    .btn-primary {
-      background: var(--orange);
-      color: #fff;
-    }
-
-    .btn-primary:hover {
-      background: var(--orange-hover);
-    }
-
-    .btn-secondary {
-      background: var(--navy);
-      color: #fff;
-    }
-
-    .btn-secondary:hover {
-      background: var(--navy-light);
-    }
-
-    .btn-outline {
-      background: #fff;
-      color: var(--text-secondary);
-      border: 1px solid var(--border);
-    }
-
-    .btn-outline:hover {
-      background: var(--bg);
-      color: var(--text-primary);
-    }
-
-    .btn-icon {
-      font-size: 1rem;
-    }
+    .btn-primary { background: var(--orange); color: #fff; }
+    .btn-primary:hover { background: var(--orange-hover); }
+    .btn-secondary { background: var(--navy); color: #fff; }
+    .btn-secondary:hover { background: var(--navy-light); }
+    .btn-outline { background: #fff; color: var(--text-secondary); border: 1px solid var(--border); }
+    .btn-outline:hover { background: var(--bg); color: var(--text-primary); }
+    .btn-icon { font-size: 1rem; }
 
     .copy-feedback {
-      position: fixed;
-      bottom: 80px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      background: var(--navy);
-      color: #fff;
-      padding: 10px 24px;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-      font-weight: 500;
-      box-shadow: var(--shadow-lg);
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.3s ease;
-      z-index: 200;
+      position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: var(--navy); color: #fff; padding: 10px 24px; border-radius: var(--radius-sm);
+      font-size: 0.85rem; font-weight: 500; box-shadow: var(--shadow-lg);
+      opacity: 0; pointer-events: none; transition: all 0.3s ease; z-index: 200;
     }
-
-    .copy-feedback.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
+    .copy-feedback.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     /* ==========================================
        Mobile Total Bar
        ========================================== */
     .mobile-total-bar {
-      display: none;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: var(--navy);
-      color: #fff;
-      padding: 14px 24px;
-      z-index: 100;
-      box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+      display: none; position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--navy); color: #fff; padding: 14px 24px;
+      z-index: 100; box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
     }
-
-    .mobile-total-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .mobile-total-label {
-      font-size: 0.75rem;
-      opacity: 0.8;
-    }
-
-    .mobile-total-amount {
-      font-size: 1.3rem;
-      font-weight: 700;
-    }
+    .mobile-total-inner { display: flex; align-items: center; justify-content: space-between; max-width: 600px; margin: 0 auto; }
+    .mobile-total-label { font-size: 0.75rem; opacity: 0.8; }
+    .mobile-total-amount { font-size: 1.3rem; font-weight: 700; }
 
     /* ==========================================
        Responsive
        ========================================== */
     @media (max-width: 1023px) {
-      .app-layout {
-        grid-template-columns: 1fr;
-        padding: 20px 16px 140px;
-        gap: 20px;
-      }
-
-      .results-panel {
-        position: static;
-        max-height: none;
-      }
-
-      .mobile-total-bar {
-        display: block;
-      }
+      .app-layout { grid-template-columns: 1fr; padding: 20px 16px 140px; gap: 20px; }
+      .results-panel { position: static; max-height: none; }
+      .mobile-total-bar { display: block; }
     }
-
     @media (max-width: 767px) {
-      .app-header {
-        padding: 14px 16px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-      }
-
-      .header-date {
-        display: none;
-      }
-
-      .config-section {
-        padding: 18px 16px;
-      }
-
-      .package-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .stepper-value {
-        font-size: 2rem;
-      }
-
-      .total-amount {
-        font-size: 2rem;
-      }
-
-      .action-bar {
-        flex-direction: column;
-      }
+      .app-header { padding: 14px 16px; flex-direction: column; align-items: flex-start; gap: 4px; }
+      .header-date { display: none; }
+      .config-section { padding: 18px 16px; }
+      .package-grid { grid-template-columns: 1fr; }
+      .support-pack-grid { grid-template-columns: 1fr; }
+      .stepper-value { font-size: 2rem; }
+      .total-amount { font-size: 1.8rem; }
+      .grand-total-amount { font-size: 1.6rem; }
+      .action-bar { flex-direction: column; }
     }
 
     /* ==========================================
        Print Styles
        ========================================== */
     @media print {
-      body {
-        background: #fff;
-        font-size: 12px;
-      }
-
-      .app-header {
-        position: static;
-        background: var(--navy);
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-      }
-
-      .app-layout {
-        display: block;
-        padding: 0;
-        max-width: 700px;
-        margin: 0 auto;
-      }
-
-      .configurator {
-        display: none;
-      }
-
-      .results-panel {
-        position: static;
-        max-height: none;
-      }
-
-      .results-card {
-        box-shadow: none;
-        border: 1px solid #ddd;
-      }
-
-      .results-header {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-      }
-
-      .action-bar {
-        display: none;
-      }
-
-      .mobile-total-bar {
-        display: none !important;
-      }
-
-      .copy-feedback {
-        display: none !important;
-      }
-
-      .chart-section {
-        page-break-inside: avoid;
-      }
-
-      .detail-section {
-        page-break-inside: avoid;
-      }
+      body { background: #fff; font-size: 11px; }
+      .app-header { position: static; background: var(--navy); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .app-layout { display: block; padding: 0; max-width: 700px; margin: 0 auto; }
+      .configurator { display: none; }
+      .results-panel { position: static; max-height: none; }
+      .results-card { box-shadow: none; border: 1px solid #ddd; }
+      .results-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .result-category { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .grand-total-section { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .action-bar { display: none; }
+      .mobile-total-bar { display: none !important; }
+      .copy-feedback { display: none !important; }
+      .chart-section { page-break-inside: avoid; }
+      .detail-section { page-break-inside: avoid; }
     }
 
-    /* ==========================================
-       Scrollbar (results panel)
-       ========================================== */
-    .results-panel::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .results-panel::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .results-panel::-webkit-scrollbar-thumb {
-      background: var(--border);
-      border-radius: 2px;
-    }
+    /* Scrollbar */
+    .results-panel::-webkit-scrollbar { width: 4px; }
+    .results-panel::-webkit-scrollbar-track { background: transparent; }
+    .results-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
   </style>
 </head>
 <body>
 
-  <!-- ==========================================
-       Header
-       ========================================== -->
+  <!-- Header -->
   <header class="app-header">
     <div class="header-brand">
       <div class="header-logo">JUST<span>.DB</span></div>
@@ -1015,9 +427,7 @@
     <div class="header-date" id="headerDate"></div>
   </header>
 
-  <!-- ==========================================
-       Main Layout
-       ========================================== -->
+  <!-- Main Layout -->
   <main class="app-layout">
 
     <!-- Left: Configurator -->
@@ -1038,7 +448,7 @@
         <div class="license-stepper">
           <button class="stepper-btn" id="licenseMinus" aria-label="5減らす">−</button>
           <div>
-            <div class="stepper-value" id="licenseValue" tabindex="0" role="spinbutton" aria-label="ライセンス数" aria-valuemin="5" aria-valuemax="100">10</div>
+            <div class="stepper-value" id="licenseValue" tabindex="0" role="spinbutton" aria-label="ライセンス数" aria-valuemin="5" aria-valuemax="100" contenteditable="true">10</div>
             <div class="stepper-unit">ライセンス</div>
           </div>
           <button class="stepper-btn" id="licensePlus" aria-label="5増やす">＋</button>
@@ -1046,9 +456,7 @@
         <div class="license-slider-wrap">
           <input type="range" class="license-slider" id="licenseSlider" min="5" max="100" step="5" value="10">
         </div>
-        <div class="license-cost" id="licenseCostDisplay">
-          10 ライセンス × ¥15,000 = <strong>¥150,000</strong> /月
-        </div>
+        <div class="license-cost" id="licenseCostDisplay"></div>
       </div>
 
       <!-- ② Package Selection -->
@@ -1057,12 +465,11 @@
           <div class="section-icon">📦</div>
           <div>
             <div class="section-title">パッケージ選択</div>
-            <div class="section-subtitle">1テナントあたり / 月額</div>
+            <div class="section-subtitle">1テナントあたり / 月額（税別）</div>
           </div>
         </div>
 
         <div class="package-grid">
-          <!-- None (default) -->
           <div class="package-card selected" data-package="none">
             <div class="package-card-check">✓</div>
             <div class="package-name">パッケージなし</div>
@@ -1072,59 +479,93 @@
             </ul>
           </div>
 
-          <!-- Basic -->
           <div class="package-card" data-package="basic">
             <div class="package-card-check">✓</div>
-            <div class="package-name">ベーシックパッケージ</div>
-            <div class="package-price">¥24,000 <span class="price-unit">/月（税別）</span></div>
+            <div class="package-name">ベーシック</div>
+            <div class="package-price">¥24,000 <span class="price-unit">/月</span></div>
             <ul class="package-features">
               <li>社内DB連携</li>
               <li>全文検索</li>
               <li>サンドボックス</li>
+              <li>AI-OCR（初回100回試用）</li>
             </ul>
+          </div>
+
+          <div class="package-card" data-package="standard">
+            <div class="package-card-check">✓</div>
+            <div class="package-name">スタンダード</div>
+            <div class="package-price">¥74,000 <span class="price-unit">/月</span></div>
+            <ul class="package-features">
+              <li>AI-OCR（毎月1,000CR）</li>
+              <li>大規模集計（2,000万件）</li>
+              <li>自動バックアップ（35日分）</li>
+              <li>ベーシック全機能含む</li>
+            </ul>
+            <div class="package-note">※ 2026年2月17日提供開始。ベーシックからの差額は¥50,000/月。</div>
           </div>
         </div>
 
-        <!-- Standard (separate, full-width) -->
-        <div class="package-card" data-package="standard" style="margin-top: 16px;">
-          <div class="package-card-check">✓</div>
-          <div class="package-name">スタンダードパッケージ</div>
-          <div class="package-price-tbd">要問い合わせ</div>
-          <ul class="package-features">
-            <li>AI-OCR</li>
-            <li>大規模データ集計</li>
-            <li>自動バックアップ</li>
-          </ul>
-          <div class="package-note">※ 別途お見積もりが必要です。2026年2月17日提供開始。</div>
-        </div>
+        <!-- Comparison Table -->
+        <details class="comparison-toggle">
+          <summary>パッケージ比較表を見る</summary>
+          <table class="comparison-table">
+            <thead>
+              <tr><th>観点</th><th>なし</th><th>ベーシック</th><th>スタンダード</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>月額（税別）</td><td>¥0</td><td>¥24,000</td><td>¥74,000</td></tr>
+              <tr><td>バックアップ</td><td>手動</td><td>手動</td><td>35日分自動</td></tr>
+              <tr><td>集計上限</td><td>標準</td><td>5万件</td><td>2,000万件</td></tr>
+              <tr><td>AI-OCR</td><td>なし</td><td>試用100回</td><td>毎月1,000CR</td></tr>
+              <tr><td>テーブル内件数</td><td>標準</td><td>500万件</td><td>2,000万件</td></tr>
+            </tbody>
+          </table>
+        </details>
       </div>
 
-      <!-- ③ Construction Features -->
+      <!-- ③ Construction Cost (Phase-based) -->
       <div class="config-section">
         <div class="section-header">
           <div class="section-icon">🔧</div>
           <div>
-            <div class="section-title">構築機能の選択</div>
-            <div class="section-subtitle">必要な機能を選択してください（費用は別途お見積り）</div>
+            <div class="section-title">システム構築費用</div>
+            <div class="section-subtitle">フェーズ別工数 × 人件費単価（税別）</div>
           </div>
         </div>
-        <div class="feature-list" id="featureList">
+        <div class="phase-list" id="phaseList">
           <!-- Generated by JS -->
         </div>
-        <div class="selected-count" id="featureCount">選択中: <strong>0</strong> 件</div>
+        <div class="construction-total-bar">
+          <span class="construction-total-label">構築費用合計（税別）</span>
+          <span class="construction-total-value" id="constructionTotal">¥0</span>
+        </div>
       </div>
 
-      <!-- ④ Options -->
+      <!-- ④ Support Pack -->
       <div class="config-section">
         <div class="section-header">
-          <div class="section-icon">⚙️</div>
+          <div class="section-icon">🛟</div>
           <div>
-            <div class="section-title">オプション設定</div>
-            <div class="section-subtitle">費用は別途お見積り</div>
+            <div class="section-title">サポートパック</div>
+            <div class="section-subtitle">導入後の運用支援（オプション・税別）</div>
           </div>
         </div>
-        <div class="options-list" id="optionsList">
-          <!-- Generated by JS -->
+        <div class="support-toggle-wrap">
+          <label class="support-toggle-label">
+            <input type="checkbox" id="supportToggle">
+            サポートパックを利用する
+          </label>
+        </div>
+        <div class="support-pack-area" id="supportPackArea">
+          <div class="support-pack-grid" id="supportPackGrid">
+            <!-- Generated by JS -->
+          </div>
+          <div class="support-note">
+            ※ 有効期限：注文月から6ヶ月後の月末まで<br>
+            ※ 先払い制（発注時にお支払い）<br>
+            ※ 工数カウントは0.5時間単位
+          </div>
+          <div class="support-recommendation" id="supportRecommendation" style="display:none;"></div>
         </div>
       </div>
 
@@ -1143,7 +584,6 @@
         </div>
         <div class="contract-calc" id="contractCalc"></div>
       </div>
-
     </section>
 
     <!-- Right: Results -->
@@ -1154,71 +594,83 @@
           <div class="results-date" id="resultsDate"></div>
         </div>
 
+        <!-- Monthly Cost -->
+        <div class="result-category">月額費用</div>
         <div class="total-section">
           <div class="total-label">月額合計（税別）</div>
           <div class="total-amount" id="totalAmount">¥0</div>
           <div class="total-tax">税込（10%）: <strong id="totalTax">¥0</strong></div>
-          <div class="total-pending" id="totalPending"></div>
+          <div class="total-tax" style="margin-top:2px;">年間費用（税込）: <strong id="annualTotal">¥0</strong></div>
         </div>
 
+        <!-- Initial Cost -->
+        <div class="result-category">初期費用（構築費用）</div>
+        <div class="total-section">
+          <div class="total-label">初期費用合計（税込）</div>
+          <div class="total-amount" id="initialTotal" style="font-size:1.8rem;">¥0</div>
+        </div>
+
+        <!-- Grand Total -->
+        <div class="result-category">総費用</div>
+        <div class="grand-total-section">
+          <div class="grand-total-label">初年度総費用（税込）</div>
+          <div class="grand-total-amount" id="grandTotal">¥0</div>
+          <div class="grand-total-breakdown" id="grandTotalBreakdown"></div>
+        </div>
+
+        <!-- Chart -->
         <div class="chart-section">
           <div class="chart-container">
             <canvas id="costChart"></canvas>
           </div>
         </div>
 
+        <!-- Detail Table -->
         <div class="detail-section">
           <div class="detail-section-title">費用明細</div>
           <table class="detail-table">
             <thead>
-              <tr>
-                <th>項目</th>
-                <th>小計</th>
-              </tr>
+              <tr><th>項目</th><th>金額</th></tr>
             </thead>
-            <tbody id="detailTableBody">
-              <!-- Generated by JS -->
-            </tbody>
+            <tbody id="detailTableBody"></tbody>
           </table>
         </div>
 
-        <div class="pending-section" id="pendingSection">
-          <div class="pending-title">別途お見積り項目</div>
-          <ul class="pending-list" id="pendingList"></ul>
-        </div>
-
+        <!-- Notes -->
         <div class="notes-section">
           <div class="detail-section-title">注意事項</div>
+          <div class="notes-category">【ライセンス・パッケージ】</div>
           <ul class="notes-list">
             <li>本見積もりは概算です。正式なお見積もりは別途ご提示いたします。</li>
-            <li>ライセンス料金は税別表示です。別途消費税10%が加算されます。</li>
+            <li>ライセンス料金・構築費用はすべて税別表示です。別途消費税10%が加算されます。</li>
             <li>同時ログインライセンスは5ライセンス単位での購入となります。</li>
-            <li>スタンダードパッケージの価格は現在公開されていないため、別途お問い合わせが必要です。</li>
+            <li>ベーシックからスタンダードへのアップグレードは差額（¥50,000/月）での変更が可能です。</li>
+            <li>スタンダードパッケージは2026年2月17日提供開始です。</li>
             <li>契約は月単位または年単位。契約期間中の解約は残存期間分の支払い義務が生じます。</li>
+          </ul>
+          <div class="notes-category">【サポートパック】</div>
+          <ul class="notes-list">
+            <li>サポートパックは有効期限（注文月から6ヶ月後の月末）があります。</li>
+            <li>サポートパックは先払い制です（発注時にお支払いいただきます）。</li>
+            <li>工数カウントは0.5時間単位です。</li>
           </ul>
         </div>
 
+        <!-- Actions -->
         <div class="action-bar">
-          <button class="btn btn-primary" id="btnCopy">
-            <span class="btn-icon">📋</span>コピー
-          </button>
-          <button class="btn btn-secondary" id="btnPdf">
-            <span class="btn-icon">📄</span>PDF出力
-          </button>
-          <button class="btn btn-outline" id="btnReset">
-            リセット
-          </button>
+          <button class="btn btn-primary" id="btnCopy"><span class="btn-icon">📋</span>コピー</button>
+          <button class="btn btn-secondary" id="btnPdf"><span class="btn-icon">📄</span>PDF出力</button>
+          <button class="btn btn-outline" id="btnReset">リセット</button>
         </div>
       </div>
     </aside>
-
   </main>
 
   <!-- Mobile Total Bar -->
   <div class="mobile-total-bar">
     <div class="mobile-total-inner">
       <div>
-        <div class="mobile-total-label">月額合計（税込）</div>
+        <div class="mobile-total-label">初年度総費用（税込）</div>
         <div class="mobile-total-amount" id="mobileTotalAmount">¥0</div>
       </div>
     </div>
@@ -1235,235 +687,239 @@
     'use strict';
 
     // ==========================================
-    // JUST.DB 公式料金（税別）
-    // 出典：ジャストシステム公式ニュースリリース
-    // 最終確認：2026年2月
+    // PRICES - JUST.DB 公式料金（税別）
     // ==========================================
-    const CONFIG = {
-      LICENSE_UNIT_PRICE: 15000,   // 円/月（税別）
-      LICENSE_MIN: 5,
-      LICENSE_MAX: 100,
-      LICENSE_STEP: 5,
-      BASIC_PACKAGE_PRICE: 24000,  // 円/月（税別）
-      STANDARD_PACKAGE_PRICE: null, // 価格未公表
-      TAX_RATE: 0.10,
-      ANIMATION_DURATION: 400,
+    var PRICES = {
+      license: { unitPrice: 15000, min: 5, max: 100, step: 5 },
+
+      packages: {
+        none:     { name: 'パッケージなし',         monthlyPrice: 0 },
+        basic:    { name: 'ベーシックパッケージ',     monthlyPrice: 24000 },
+        standard: { name: 'スタンダードパッケージ',   monthlyPrice: 74000, upgradeFromBasic: 50000 },
+      },
+
+      staffRates: {
+        manager:          { name: 'マネージャー',         hourlyRate: 24000 },
+        seniorConsultant: { name: 'シニアコンサルタント', hourlyRate: 18000 },
+        consultant:       { name: 'コンサルタント',       hourlyRate: 12000 },
+        engineer:         { name: 'システムエンジニア',   hourlyRate: 8000 },
+        associate:        { name: 'アソシエイト',         hourlyRate: 8000 },
+      },
+
+      constructionPhases: {
+        requirements: { name: '要件整理・要件定義',       role: 'seniorConsultant', defaultHours: 40, maxHours: 80,  description: 'As-Is/To-Be整理、業務フロー作成' },
+        pm:           { name: 'PM・プロジェクト管理',     role: 'manager',          defaultHours: 20, maxHours: 40,  description: '定例会・課題管理・議事録作成' },
+        development:  { name: '構築・開発（アジャイル）', role: 'consultant',       defaultHours: 60, maxHours: 120, description: 'プロトタイプ作成・実装・テスト・修正' },
+        training:     { name: '教育・研修支援',           role: 'consultant',       defaultHours: 20, maxHours: 40,  description: 'DX担当者研修（約9〜10時間）＋個別補助' },
+        manual:       { name: 'マニュアル・成果物作成',   role: 'associate',        defaultHours: 16, maxHours: 32,  description: 'DB定義書・業務プレート定義書作成' },
+      },
+
+      supportPacks: {
+        pack20: { name: 'サポートパック20', price: 400000,  hours: 20, unitPrice: 20000 },
+        pack40: { name: 'サポートパック40', price: 700000,  hours: 40, unitPrice: 17500 },
+        pack60: { name: 'サポートパック60', price: 1000000, hours: 60, unitPrice: 16666 },
+      },
+
+      taxRate: 0.10,
+      animationDuration: 400,
     };
-
-    const CONSTRUCTION_FEATURES = [
-      { id: 'customerManagement',  name: '顧客管理機能' },
-      { id: 'dealManagement',      name: '案件・商談管理機能' },
-      { id: 'activityLog',         name: '活動履歴管理機能' },
-      { id: 'dashboard',           name: 'ダッシュボード・レポート' },
-      { id: 'mobile',              name: 'モバイル対応設定' },
-      { id: 'roleManagement',      name: '権限・ロール管理' },
-      { id: 'externalIntegration', name: '外部システム連携' },
-      { id: 'dataMigration',       name: 'データ移行支援' },
-      { id: 'partnerManagement',   name: '代理店・パートナー管理' },
-    ];
-
-    const OPTIONS = [
-      { id: 'training', name: '導入支援・トレーニング' },
-      { id: 'support',  name: '保守・サポート契約' },
-    ];
 
     // ==========================================
     // State
     // ==========================================
-    const state = {
+    var state = {
       licenseCount: 10,
       selectedPackage: 'none',
-      selectedFeatures: new Set(),
-      selectedOptions: new Set(),
       contractMonths: 12,
+      phaseHours: {
+        requirements: 40, pm: 20, development: 60, training: 20, manual: 16,
+      },
+      useSupportPack: false,
+      selectedSupportPack: null,
     };
 
     // Previous values for animation
-    let prevTotalMonthly = 0;
-    let prevTotalTax = 0;
-    let prevMobileTotal = 0;
+    var prevMonthly = 0, prevMonthlyTax = 0, prevAnnual = 0;
+    var prevInitial = 0, prevGrand = 0, prevMobile = 0;
 
     // ==========================================
-    // Number Formatting
+    // Formatting
     // ==========================================
-    const formatter = new Intl.NumberFormat('ja-JP');
-
-    function formatYen(value) {
-      if (value === null || value === undefined) return '別途';
-      return '¥' + formatter.format(value);
-    }
+    var fmt = new Intl.NumberFormat('ja-JP');
+    function yen(v) { return v == null ? '---' : '¥' + fmt.format(v); }
 
     // ==========================================
-    // Number Animation
+    // Animation
     // ==========================================
-    function animateValue(el, from, to, duration, prefix) {
-      if (prefix === undefined) prefix = '¥';
-      const start = performance.now();
-
-      function update(now) {
-        const elapsed = now - start;
-        const progress = Math.min(elapsed / duration, 1);
-        // easeOutCubic
-        const eased = 1 - Math.pow(1 - progress, 3);
-        const current = Math.round(from + (to - from) * eased);
-        el.textContent = prefix + formatter.format(current);
-        if (progress < 1) requestAnimationFrame(update);
+    function animateVal(el, from, to, dur, prefix) {
+      prefix = prefix || '¥';
+      var start = performance.now();
+      function tick(now) {
+        var p = Math.min((now - start) / dur, 1);
+        var e = 1 - Math.pow(1 - p, 3);
+        el.textContent = prefix + fmt.format(Math.round(from + (to - from) * e));
+        if (p < 1) requestAnimationFrame(tick);
       }
-
-      requestAnimationFrame(update);
+      requestAnimationFrame(tick);
     }
 
     // ==========================================
-    // Calculation Engine
+    // Calculation
     // ==========================================
     function calculate() {
-      const licenseCost = state.licenseCount * CONFIG.LICENSE_UNIT_PRICE;
+      var licenseCost = state.licenseCount * PRICES.license.unitPrice;
+      var pkg = PRICES.packages[state.selectedPackage];
+      var packageCost = pkg.monthlyPrice;
 
-      let packageCost = 0;
-      let packageLabel = 'なし';
-      let hasStandardPackage = false;
+      var monthlySubtotal = licenseCost + packageCost;
+      var monthlyTax = Math.floor(monthlySubtotal * PRICES.taxRate);
+      var monthlyTotal = monthlySubtotal + monthlyTax;
+      var annualTotal = monthlyTotal * 12;
 
-      if (state.selectedPackage === 'basic') {
-        packageCost = CONFIG.BASIC_PACKAGE_PRICE;
-        packageLabel = 'ベーシック';
-      } else if (state.selectedPackage === 'standard') {
-        packageCost = 0;
-        packageLabel = 'スタンダード（要問い合わせ）';
-        hasStandardPackage = true;
+      // Construction cost
+      var constructionSubtotal = 0;
+      var phaseDetails = [];
+      var phaseKeys = Object.keys(PRICES.constructionPhases);
+      for (var i = 0; i < phaseKeys.length; i++) {
+        var key = phaseKeys[i];
+        var phase = PRICES.constructionPhases[key];
+        var staff = PRICES.staffRates[phase.role];
+        var hours = state.phaseHours[key];
+        var cost = hours * staff.hourlyRate;
+        constructionSubtotal += cost;
+        phaseDetails.push({ key: key, name: phase.name, role: staff.name, rate: staff.hourlyRate, hours: hours, cost: cost });
       }
 
-      const monthlySubtotal = licenseCost + packageCost;
-      const monthlyTax = Math.floor(monthlySubtotal * CONFIG.TAX_RATE);
-      const monthlyTotal = monthlySubtotal + monthlyTax;
-      const contractTotal = monthlySubtotal * state.contractMonths;
-      const contractTotalTax = Math.floor(contractTotal * CONFIG.TAX_RATE);
-
-      const pendingItems = [];
-      if (hasStandardPackage) {
-        pendingItems.push('スタンダードパッケージ料金');
+      var supportPackCost = 0;
+      var supportPackName = '';
+      if (state.useSupportPack && state.selectedSupportPack) {
+        var sp = PRICES.supportPacks[state.selectedSupportPack];
+        supportPackCost = sp.price;
+        supportPackName = sp.name;
       }
-      state.selectedFeatures.forEach(function(id) {
-        var feat = CONSTRUCTION_FEATURES.find(function(f) { return f.id === id; });
-        if (feat) pendingItems.push(feat.name + '（構築費用）');
-      });
-      state.selectedOptions.forEach(function(id) {
-        var opt = OPTIONS.find(function(o) { return o.id === id; });
-        if (opt) pendingItems.push(opt.name);
-      });
+
+      var initialSubtotal = constructionSubtotal + supportPackCost;
+      var initialTax = Math.floor(initialSubtotal * PRICES.taxRate);
+      var initialTotal = initialSubtotal + initialTax;
+
+      var grandTotal = annualTotal + initialTotal;
+
+      var contractMonthlyTotal = monthlyTotal * state.contractMonths;
+      var contractSubtotal = monthlySubtotal * state.contractMonths;
+
+      // Total phase hours
+      var totalPhaseHours = 0;
+      for (var k in state.phaseHours) totalPhaseHours += state.phaseHours[k];
 
       return {
         licenseCost: licenseCost,
         packageCost: packageCost,
-        packageLabel: packageLabel,
-        hasStandardPackage: hasStandardPackage,
+        packageName: pkg.name,
         monthlySubtotal: monthlySubtotal,
         monthlyTax: monthlyTax,
         monthlyTotal: monthlyTotal,
-        contractTotal: contractTotal,
-        contractTotalTax: contractTotalTax,
+        annualTotal: annualTotal,
+        constructionSubtotal: constructionSubtotal,
+        phaseDetails: phaseDetails,
+        supportPackCost: supportPackCost,
+        supportPackName: supportPackName,
+        initialSubtotal: initialSubtotal,
+        initialTax: initialTax,
+        initialTotal: initialTotal,
+        grandTotal: grandTotal,
         contractMonths: state.contractMonths,
-        pendingItems: pendingItems,
-        hasPendingItems: pendingItems.length > 0,
+        contractMonthlyTotal: contractMonthlyTotal,
+        contractSubtotal: contractSubtotal,
+        totalPhaseHours: totalPhaseHours,
       };
     }
 
     // ==========================================
-    // DOM References
+    // DOM
     // ==========================================
     var dom = {};
-
     function cacheDom() {
-      dom.licenseValue = document.getElementById('licenseValue');
-      dom.licenseSlider = document.getElementById('licenseSlider');
-      dom.licenseMinus = document.getElementById('licenseMinus');
-      dom.licensePlus = document.getElementById('licensePlus');
-      dom.licenseCostDisplay = document.getElementById('licenseCostDisplay');
-      dom.featureList = document.getElementById('featureList');
-      dom.featureCount = document.getElementById('featureCount');
-      dom.optionsList = document.getElementById('optionsList');
-      dom.totalAmount = document.getElementById('totalAmount');
-      dom.totalTax = document.getElementById('totalTax');
-      dom.totalPending = document.getElementById('totalPending');
-      dom.detailTableBody = document.getElementById('detailTableBody');
-      dom.pendingSection = document.getElementById('pendingSection');
-      dom.pendingList = document.getElementById('pendingList');
-      dom.contractCalc = document.getElementById('contractCalc');
-      dom.mobileTotalAmount = document.getElementById('mobileTotalAmount');
-      dom.btnCopy = document.getElementById('btnCopy');
-      dom.btnPdf = document.getElementById('btnPdf');
-      dom.btnReset = document.getElementById('btnReset');
-      dom.copyFeedback = document.getElementById('copyFeedback');
-      dom.headerDate = document.getElementById('headerDate');
-      dom.resultsDate = document.getElementById('resultsDate');
-      dom.costChart = document.getElementById('costChart');
+      var ids = ['licenseValue','licenseSlider','licenseMinus','licensePlus','licenseCostDisplay',
+        'totalAmount','totalTax','annualTotal','initialTotal','grandTotal','grandTotalBreakdown',
+        'detailTableBody','contractCalc','mobileTotalAmount','constructionTotal',
+        'phaseList','supportToggle','supportPackArea','supportPackGrid','supportRecommendation',
+        'btnCopy','btnPdf','btnReset','copyFeedback','headerDate','resultsDate','costChart'];
+      for (var i = 0; i < ids.length; i++) dom[ids[i]] = document.getElementById(ids[i]);
     }
 
     // ==========================================
     // Chart
     // ==========================================
     var chart = null;
-
     function initChart() {
-      var ctx = dom.costChart.getContext('2d');
-      chart = new Chart(ctx, {
+      chart = new Chart(dom.costChart.getContext('2d'), {
         type: 'doughnut',
         data: {
-          labels: ['ライセンス', 'パッケージ'],
-          datasets: [{
-            data: [0, 0],
-            backgroundColor: ['#1a3a5c', '#f07900'],
-            borderWidth: 0,
-            borderRadius: 4,
-          }]
+          labels: [], datasets: [{ data: [], backgroundColor: [], borderWidth: 0, borderRadius: 4 }]
         },
         options: {
-          responsive: true,
-          maintainAspectRatio: true,
-          cutout: '65%',
+          responsive: true, maintainAspectRatio: true, cutout: '65%',
           plugins: {
-            legend: {
-              position: 'bottom',
-              labels: {
-                font: { family: "'Noto Sans JP'", size: 12 },
-                padding: 16,
-                usePointStyle: true,
-                pointStyle: 'circle',
-              }
-            },
-            tooltip: {
-              callbacks: {
-                label: function(ctx) {
-                  if (ctx.parsed === 0) return ctx.label + ': なし';
-                  return ctx.label + ': ¥' + formatter.format(ctx.parsed);
-                }
-              }
-            }
+            legend: { position: 'bottom', labels: { font: { family: "'Noto Sans JP'", size: 11 }, padding: 14, usePointStyle: true, pointStyle: 'circle' } },
+            tooltip: { callbacks: { label: function(ctx) { return ctx.label + ': ¥' + fmt.format(ctx.parsed); } } }
           }
         }
       });
     }
 
     function updateChart(data) {
-      var labels = ['ライセンス'];
-      var values = [data.licenseCost];
-      var colors = ['#1a3a5c'];
-
-      if (data.packageCost > 0) {
-        labels.push('パッケージ');
-        values.push(data.packageCost);
-        colors.push('#f07900');
-      }
-
-      if (data.hasStandardPackage) {
-        labels.push('パッケージ（要問い合わせ）');
-        values.push(0);
-        colors.push('#e1e8ef');
-      }
-
+      var labels = [], values = [], colors = [];
+      if (data.licenseCost > 0) { labels.push('ライセンス（年間）'); values.push(data.licenseCost * 12); colors.push('#1a3a5c'); }
+      if (data.packageCost > 0) { labels.push('パッケージ（年間）'); values.push(data.packageCost * 12); colors.push('#2a5a8c'); }
+      if (data.constructionSubtotal > 0) { labels.push('構築費用'); values.push(data.constructionSubtotal); colors.push('#f07900'); }
+      if (data.supportPackCost > 0) { labels.push('サポートパック'); values.push(data.supportPackCost); colors.push('#f5a623'); }
       chart.data.labels = labels;
       chart.data.datasets[0].data = values;
       chart.data.datasets[0].backgroundColor = colors;
       chart.update();
+    }
+
+    // ==========================================
+    // Build Phase Sliders
+    // ==========================================
+    function buildPhaseList() {
+      var html = '';
+      var keys = Object.keys(PRICES.constructionPhases);
+      for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        var p = PRICES.constructionPhases[key];
+        var staff = PRICES.staffRates[p.role];
+        var hours = state.phaseHours[key];
+        var cost = hours * staff.hourlyRate;
+        html += '<div class="phase-row" data-phase="' + key + '">' +
+          '<div class="phase-row-header">' +
+            '<span class="phase-name">' + p.name + '</span>' +
+            '<span class="phase-subtotal" id="phaseCost_' + key + '">' + yen(cost) + '</span>' +
+          '</div>' +
+          '<div class="phase-meta">' + staff.name + ' ¥' + fmt.format(staff.hourlyRate) + '/時 ｜ ' + p.description + '</div>' +
+          '<div class="phase-slider-row">' +
+            '<input type="range" class="phase-slider" data-phase="' + key + '" min="0" max="' + p.maxHours + '" step="1" value="' + hours + '">' +
+            '<span class="phase-hours" id="phaseHours_' + key + '">' + hours + 'h</span>' +
+          '</div>' +
+        '</div>';
+      }
+      dom.phaseList.innerHTML = html;
+    }
+
+    function buildSupportPacks() {
+      var html = '';
+      var keys = Object.keys(PRICES.supportPacks);
+      for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        var sp = PRICES.supportPacks[key];
+        html += '<div class="support-pack-card" data-pack="' + key + '">' +
+          '<div class="support-pack-name">' + sp.name + '</div>' +
+          '<div class="support-pack-price">' + yen(sp.price) + '</div>' +
+          '<div class="support-pack-detail">' + sp.hours + '時間</div>' +
+          '<div class="support-pack-unit">単価 ¥' + fmt.format(sp.unitPrice) + '/時</div>' +
+        '</div>';
+      }
+      dom.supportPackGrid.innerHTML = html;
     }
 
     // ==========================================
@@ -1472,232 +928,193 @@
     function render() {
       var data = calculate();
 
-      // License display
+      // License
       dom.licenseValue.textContent = state.licenseCount;
-      dom.licenseValue.setAttribute('aria-valuenow', state.licenseCount);
       dom.licenseSlider.value = state.licenseCount;
-      dom.licenseMinus.disabled = state.licenseCount <= CONFIG.LICENSE_MIN;
-      dom.licensePlus.disabled = state.licenseCount >= CONFIG.LICENSE_MAX;
-      dom.licenseCostDisplay.innerHTML =
-        state.licenseCount + ' ライセンス × ¥15,000 = <strong>' + formatYen(data.licenseCost) + '</strong> /月';
+      dom.licenseMinus.disabled = state.licenseCount <= PRICES.license.min;
+      dom.licensePlus.disabled = state.licenseCount >= PRICES.license.max;
+      dom.licenseCostDisplay.innerHTML = state.licenseCount + ' ライセンス × ¥15,000 = <strong>' + yen(data.licenseCost) + '</strong> /月';
 
-      // Feature count
-      dom.featureCount.innerHTML = '選択中: <strong>' + state.selectedFeatures.size + '</strong> 件';
+      // Phase costs
+      var phaseKeys = Object.keys(PRICES.constructionPhases);
+      for (var i = 0; i < phaseKeys.length; i++) {
+        var key = phaseKeys[i];
+        var el = document.getElementById('phaseCost_' + key);
+        var hEl = document.getElementById('phaseHours_' + key);
+        if (el) el.textContent = yen(data.phaseDetails[i].cost);
+        if (hEl) hEl.textContent = state.phaseHours[key] + 'h';
+      }
+      dom.constructionTotal.textContent = yen(data.constructionSubtotal);
+
+      // Support recommendation
+      if (state.useSupportPack && data.totalPhaseHours > 0) {
+        var rec = recommendPacks(data.totalPhaseHours);
+        dom.supportRecommendation.style.display = 'block';
+        dom.supportRecommendation.textContent = '💡 合計工数 ' + data.totalPhaseHours + '時間 → ' + rec;
+      } else {
+        dom.supportRecommendation.style.display = 'none';
+      }
 
       // Totals with animation
-      animateValue(dom.totalAmount, prevTotalMonthly, data.monthlySubtotal, CONFIG.ANIMATION_DURATION);
-      prevTotalMonthly = data.monthlySubtotal;
+      var dur = PRICES.animationDuration;
+      animateVal(dom.totalAmount, prevMonthly, data.monthlySubtotal, dur);
+      prevMonthly = data.monthlySubtotal;
+      animateVal(dom.totalTax, prevMonthlyTax, data.monthlyTotal, dur);
+      prevMonthlyTax = data.monthlyTotal;
+      animateVal(dom.annualTotal, prevAnnual, data.annualTotal, dur);
+      prevAnnual = data.annualTotal;
+      animateVal(dom.initialTotal, prevInitial, data.initialTotal, dur);
+      prevInitial = data.initialTotal;
+      animateVal(dom.grandTotal, prevGrand, data.grandTotal, dur);
+      prevGrand = data.grandTotal;
+      animateVal(dom.mobileTotalAmount, prevMobile, data.grandTotal, dur);
+      prevMobile = data.grandTotal;
 
-      animateValue(dom.totalTax, prevTotalTax, data.monthlyTotal, CONFIG.ANIMATION_DURATION);
-      prevTotalTax = data.monthlyTotal;
+      dom.grandTotalBreakdown.textContent = '月額' + yen(data.monthlyTotal) + ' × 12ヶ月 ＋ 初期費用' + yen(data.initialTotal);
 
-      animateValue(dom.mobileTotalAmount, prevMobileTotal, data.monthlyTotal, CONFIG.ANIMATION_DURATION);
-      prevMobileTotal = data.monthlyTotal;
-
-      // Pending notice
-      if (data.hasPendingItems) {
-        dom.totalPending.textContent = '※ 別途お見積り項目あり';
-      } else {
-        dom.totalPending.textContent = '';
-      }
+      // Contract calc
+      dom.contractCalc.innerHTML = yen(data.monthlySubtotal) + ' × ' + data.contractMonths + 'ヶ月 = <strong>' + yen(data.contractSubtotal) + '</strong>（税別）';
 
       // Detail table
       var rows = '';
-      rows += '<tr><td>ライセンス費用（' + state.licenseCount + '名 × ¥15,000）</td><td>' + formatYen(data.licenseCost) + ' /月</td></tr>';
-
-      if (state.selectedPackage === 'basic') {
-        rows += '<tr><td>ベーシックパッケージ</td><td>' + formatYen(data.packageCost) + ' /月</td></tr>';
-      } else if (state.selectedPackage === 'standard') {
-        rows += '<tr><td>スタンダードパッケージ</td><td class="tbd">要問い合わせ</td></tr>';
+      rows += '<tr class="section-label"><td colspan="2">▎ 月額費用</td></tr>';
+      rows += '<tr><td>ライセンス（' + state.licenseCount + '名 × ¥15,000）</td><td>' + yen(data.licenseCost) + '/月</td></tr>';
+      if (state.selectedPackage !== 'none') {
+        rows += '<tr><td>' + data.packageName + '</td><td>' + yen(data.packageCost) + '/月</td></tr>';
       }
+      rows += '<tr class="subtotal-row"><td>月額合計（税別）</td><td>' + yen(data.monthlySubtotal) + '</td></tr>';
+      rows += '<tr><td>消費税（10%）</td><td>' + yen(data.monthlyTax) + '</td></tr>';
+      rows += '<tr class="subtotal-row"><td>月額合計（税込）</td><td>' + yen(data.monthlyTotal) + '</td></tr>';
+      rows += '<tr><td>年間費用（税込）</td><td>' + yen(data.annualTotal) + '</td></tr>';
 
-      rows += '<tr class="subtotal-row"><td>月額合計（税別）</td><td>' + formatYen(data.monthlySubtotal) + '</td></tr>';
-      rows += '<tr><td>消費税（10%）</td><td>' + formatYen(data.monthlyTax) + '</td></tr>';
-      rows += '<tr class="subtotal-row"><td>月額合計（税込）</td><td>' + formatYen(data.monthlyTotal) + '</td></tr>';
-      rows += '<tr><td>契約期間合計（' + data.contractMonths + 'ヶ月・税別）</td><td>' + formatYen(data.contractTotal) + '</td></tr>';
-      rows += '<tr class="subtotal-row"><td>契約期間合計（税込）</td><td>' + formatYen(data.contractTotal + data.contractTotalTax) + '</td></tr>';
+      rows += '<tr class="section-label"><td colspan="2">▎ 初期費用（構築）</td></tr>';
+      for (var j = 0; j < data.phaseDetails.length; j++) {
+        var pd = data.phaseDetails[j];
+        if (pd.hours > 0) {
+          rows += '<tr><td>' + pd.name + '（' + pd.hours + 'h × ¥' + fmt.format(pd.rate) + '）</td><td>' + yen(pd.cost) + '</td></tr>';
+        }
+      }
+      if (data.supportPackCost > 0) {
+        rows += '<tr><td>' + data.supportPackName + '</td><td>' + yen(data.supportPackCost) + '</td></tr>';
+      }
+      rows += '<tr class="subtotal-row"><td>初期費用合計（税別）</td><td>' + yen(data.initialSubtotal) + '</td></tr>';
+      rows += '<tr><td>消費税（10%）</td><td>' + yen(data.initialTax) + '</td></tr>';
+      rows += '<tr class="subtotal-row"><td>初期費用合計（税込）</td><td>' + yen(data.initialTotal) + '</td></tr>';
+
+      rows += '<tr class="section-label"><td colspan="2">▎ 契約期間費用</td></tr>';
+      rows += '<tr><td>月額 × ' + data.contractMonths + 'ヶ月（税込）</td><td>' + yen(data.contractMonthlyTotal) + '</td></tr>';
 
       dom.detailTableBody.innerHTML = rows;
-
-      // Pending section
-      if (data.hasPendingItems) {
-        dom.pendingSection.classList.add('visible');
-        dom.pendingList.innerHTML = data.pendingItems.map(function(item) {
-          return '<li>' + item + '</li>';
-        }).join('');
-      } else {
-        dom.pendingSection.classList.remove('visible');
-      }
-
-      // Contract calc
-      dom.contractCalc.innerHTML =
-        formatYen(data.monthlySubtotal) + ' × ' + data.contractMonths + 'ヶ月 = <strong>' + formatYen(data.contractTotal) + '</strong>（税別）';
 
       // Chart
       updateChart(data);
     }
 
     // ==========================================
-    // Build Feature List
+    // Support Pack Recommendation
     // ==========================================
-    function buildFeatureList() {
-      dom.featureList.innerHTML = CONSTRUCTION_FEATURES.map(function(feat) {
-        return '<label class="feature-item" data-feature="' + feat.id + '">' +
-          '<input type="checkbox" value="' + feat.id + '">' +
-          '<div class="feature-checkbox-visual">✓</div>' +
-          '<span class="feature-label">' + feat.name + '</span>' +
-          '<span class="feature-badge">別途</span>' +
-          '</label>';
-      }).join('');
+    function recommendPacks(totalHours) {
+      var best = null, bestCost = Infinity;
+      var packs = [
+        { name: 'パック60', hours: 60, price: 1000000 },
+        { name: 'パック40', hours: 40, price: 700000 },
+        { name: 'パック20', hours: 20, price: 400000 },
+      ];
+      // Simple greedy
+      for (var a = 0; a <= 3; a++) {
+        for (var b = 0; b <= 4; b++) {
+          for (var c = 0; c <= 8; c++) {
+            var h = a * 60 + b * 40 + c * 20;
+            var cost = a * 1000000 + b * 700000 + c * 400000;
+            if (h >= totalHours && cost < bestCost) {
+              bestCost = cost;
+              best = [];
+              if (a > 0) best.push('パック60 × ' + a);
+              if (b > 0) best.push('パック40 × ' + b);
+              if (c > 0) best.push('パック20 × ' + c);
+            }
+          }
+        }
+      }
+      return best && best.length > 0 ? best.join(' ＋ ') + '（' + yen(bestCost) + '）がおすすめ' : '個別にご相談ください';
     }
 
-    function buildOptionsList() {
-      dom.optionsList.innerHTML = OPTIONS.map(function(opt) {
-        return '<label class="feature-item" data-option="' + opt.id + '">' +
-          '<input type="checkbox" value="' + opt.id + '">' +
-          '<div class="feature-checkbox-visual">✓</div>' +
-          '<span class="feature-label">' + opt.name + '</span>' +
-          '<span class="feature-badge">別途</span>' +
-          '</label>';
-      }).join('');
-    }
-
     // ==========================================
-    // Event Handlers
+    // Events
     // ==========================================
-    function setLicenseCount(value) {
-      value = Math.max(CONFIG.LICENSE_MIN, Math.min(CONFIG.LICENSE_MAX, value));
-      // Snap to step
-      value = Math.round(value / CONFIG.LICENSE_STEP) * CONFIG.LICENSE_STEP;
-      state.licenseCount = value;
+    function setLicense(v) {
+      v = Math.max(PRICES.license.min, Math.min(PRICES.license.max, v));
+      v = Math.round(v / PRICES.license.step) * PRICES.license.step;
+      state.licenseCount = v;
       render();
     }
 
     function attachEvents() {
-      // License stepper
-      dom.licenseMinus.addEventListener('click', function() {
-        setLicenseCount(state.licenseCount - CONFIG.LICENSE_STEP);
-      });
+      dom.licenseMinus.addEventListener('click', function() { setLicense(state.licenseCount - PRICES.license.step); });
+      dom.licensePlus.addEventListener('click', function() { setLicense(state.licenseCount + PRICES.license.step); });
+      dom.licenseSlider.addEventListener('input', function() { setLicense(parseInt(this.value, 10)); });
 
-      dom.licensePlus.addEventListener('click', function() {
-        setLicenseCount(state.licenseCount + CONFIG.LICENSE_STEP);
-      });
-
-      // License slider
-      dom.licenseSlider.addEventListener('input', function() {
-        setLicenseCount(parseInt(this.value, 10));
-      });
-
-      // License direct edit
       dom.licenseValue.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          var val = parseInt(this.textContent.replace(/[^0-9]/g, ''), 10);
-          if (!isNaN(val)) {
-            setLicenseCount(val);
-          }
-          this.blur();
-        } else if (e.key === 'Escape') {
-          this.textContent = state.licenseCount;
-          this.blur();
-        }
+        if (e.key === 'Enter') { e.preventDefault(); var v = parseInt(this.textContent.replace(/\D/g,''),10); if (!isNaN(v)) setLicense(v); this.blur(); }
+        else if (e.key === 'Escape') { this.textContent = state.licenseCount; this.blur(); }
       });
-
-      dom.licenseValue.addEventListener('focus', function() {
-        // Select all text on focus
-        var range = document.createRange();
-        range.selectNodeContents(this);
-        var sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
-      });
-
       dom.licenseValue.addEventListener('blur', function() {
-        var val = parseInt(this.textContent.replace(/[^0-9]/g, ''), 10);
-        if (!isNaN(val)) {
-          setLicenseCount(val);
-        } else {
-          this.textContent = state.licenseCount;
-        }
+        var v = parseInt(this.textContent.replace(/\D/g,''),10);
+        if (!isNaN(v)) setLicense(v); else this.textContent = state.licenseCount;
       });
 
-      // Long press for stepper buttons
-      var longPressTimer = null;
-      var longPressInterval = null;
-
-      function startLongPress(direction) {
-        longPressTimer = setTimeout(function() {
-          longPressInterval = setInterval(function() {
-            setLicenseCount(state.licenseCount + direction * CONFIG.LICENSE_STEP);
-          }, 120);
-        }, 400);
-      }
-
-      function stopLongPress() {
-        clearTimeout(longPressTimer);
-        clearInterval(longPressInterval);
-      }
-
-      dom.licenseMinus.addEventListener('mousedown', function() { startLongPress(-1); });
-      dom.licenseMinus.addEventListener('mouseup', stopLongPress);
-      dom.licenseMinus.addEventListener('mouseleave', stopLongPress);
-      dom.licenseMinus.addEventListener('touchstart', function(e) { e.preventDefault(); startLongPress(-1); });
-      dom.licenseMinus.addEventListener('touchend', function(e) { e.preventDefault(); stopLongPress(); setLicenseCount(state.licenseCount - CONFIG.LICENSE_STEP); });
-
-      dom.licensePlus.addEventListener('mousedown', function() { startLongPress(1); });
-      dom.licensePlus.addEventListener('mouseup', stopLongPress);
-      dom.licensePlus.addEventListener('mouseleave', stopLongPress);
-      dom.licensePlus.addEventListener('touchstart', function(e) { e.preventDefault(); startLongPress(1); });
-      dom.licensePlus.addEventListener('touchend', function(e) { e.preventDefault(); stopLongPress(); setLicenseCount(state.licenseCount + CONFIG.LICENSE_STEP); });
+      // Long press
+      var lpTimer, lpInterval;
+      function startLp(dir) { lpTimer = setTimeout(function() { lpInterval = setInterval(function() { setLicense(state.licenseCount + dir * PRICES.license.step); }, 120); }, 400); }
+      function stopLp() { clearTimeout(lpTimer); clearInterval(lpInterval); }
+      dom.licenseMinus.addEventListener('mousedown', function() { startLp(-1); });
+      dom.licenseMinus.addEventListener('mouseup', stopLp);
+      dom.licenseMinus.addEventListener('mouseleave', stopLp);
+      dom.licensePlus.addEventListener('mousedown', function() { startLp(1); });
+      dom.licensePlus.addEventListener('mouseup', stopLp);
+      dom.licensePlus.addEventListener('mouseleave', stopLp);
 
       // Package cards
       document.querySelectorAll('.package-card').forEach(function(card) {
         card.addEventListener('click', function() {
-          document.querySelectorAll('.package-card').forEach(function(c) {
-            c.classList.remove('selected');
-          });
+          document.querySelectorAll('.package-card').forEach(function(c) { c.classList.remove('selected'); });
           this.classList.add('selected');
           state.selectedPackage = this.dataset.package;
           render();
         });
       });
 
-      // Feature checkboxes (event delegation)
-      dom.featureList.addEventListener('click', function(e) {
-        var item = e.target.closest('.feature-item');
-        if (!item) return;
-        var checkbox = item.querySelector('input[type="checkbox"]');
-        checkbox.checked = !checkbox.checked;
-        item.classList.toggle('checked', checkbox.checked);
-        if (checkbox.checked) {
-          state.selectedFeatures.add(checkbox.value);
-        } else {
-          state.selectedFeatures.delete(checkbox.value);
+      // Phase sliders (delegation)
+      dom.phaseList.addEventListener('input', function(e) {
+        if (e.target.classList.contains('phase-slider')) {
+          var phase = e.target.dataset.phase;
+          state.phaseHours[phase] = parseInt(e.target.value, 10);
+          render();
         }
+      });
+
+      // Support toggle
+      dom.supportToggle.addEventListener('change', function() {
+        state.useSupportPack = this.checked;
+        dom.supportPackArea.classList.toggle('visible', this.checked);
+        if (!this.checked) { state.selectedSupportPack = null; deselectAllPacks(); }
         render();
       });
 
-      // Option checkboxes (event delegation)
-      dom.optionsList.addEventListener('click', function(e) {
-        var item = e.target.closest('.feature-item');
-        if (!item) return;
-        var checkbox = item.querySelector('input[type="checkbox"]');
-        checkbox.checked = !checkbox.checked;
-        item.classList.toggle('checked', checkbox.checked);
-        if (checkbox.checked) {
-          state.selectedOptions.add(checkbox.value);
-        } else {
-          state.selectedOptions.delete(checkbox.value);
-        }
+      // Support pack cards (delegation)
+      dom.supportPackGrid.addEventListener('click', function(e) {
+        var card = e.target.closest('.support-pack-card');
+        if (!card) return;
+        document.querySelectorAll('.support-pack-card').forEach(function(c) { c.classList.remove('selected'); });
+        card.classList.add('selected');
+        state.selectedSupportPack = card.dataset.pack;
         render();
       });
 
       // Contract period
       document.querySelectorAll('.period-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
-          document.querySelectorAll('.period-btn').forEach(function(b) {
-            b.classList.remove('active');
-          });
+          document.querySelectorAll('.period-btn').forEach(function(b) { b.classList.remove('active'); });
           this.classList.add('active');
           state.contractMonths = parseInt(this.dataset.months, 10);
           render();
@@ -1706,129 +1123,100 @@
 
       // Copy
       dom.btnCopy.addEventListener('click', function() {
-        var text = generateSummary();
-        navigator.clipboard.writeText(text).then(function() {
+        navigator.clipboard.writeText(generateSummary()).then(function() {
           dom.copyFeedback.classList.add('show');
-          setTimeout(function() {
-            dom.copyFeedback.classList.remove('show');
-          }, 2000);
+          setTimeout(function() { dom.copyFeedback.classList.remove('show'); }, 2000);
         });
       });
 
       // PDF
-      dom.btnPdf.addEventListener('click', function() {
-        window.print();
-      });
+      dom.btnPdf.addEventListener('click', function() { window.print(); });
 
       // Reset
-      dom.btnReset.addEventListener('click', function() {
-        state.licenseCount = 10;
-        state.selectedPackage = 'none';
-        state.selectedFeatures.clear();
-        state.selectedOptions.clear();
-        state.contractMonths = 12;
+      dom.btnReset.addEventListener('click', resetAll);
+    }
 
-        // Reset UI elements
-        document.querySelectorAll('.package-card').forEach(function(c) {
-          c.classList.remove('selected');
-        });
-        document.querySelector('[data-package="none"]').classList.add('selected');
+    function deselectAllPacks() {
+      document.querySelectorAll('.support-pack-card').forEach(function(c) { c.classList.remove('selected'); });
+    }
 
-        document.querySelectorAll('.feature-item').forEach(function(item) {
-          item.classList.remove('checked');
-          var cb = item.querySelector('input[type="checkbox"]');
-          if (cb) cb.checked = false;
-        });
+    function resetAll() {
+      state.licenseCount = 10;
+      state.selectedPackage = 'none';
+      state.contractMonths = 12;
+      state.phaseHours = { requirements: 40, pm: 20, development: 60, training: 20, manual: 16 };
+      state.useSupportPack = false;
+      state.selectedSupportPack = null;
 
-        document.querySelectorAll('.period-btn').forEach(function(b) {
-          b.classList.remove('active');
-        });
-        document.querySelector('[data-months="12"]').classList.add('active');
+      document.querySelectorAll('.package-card').forEach(function(c) { c.classList.remove('selected'); });
+      document.querySelector('[data-package="none"]').classList.add('selected');
+      document.querySelectorAll('.period-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelector('[data-months="12"]').classList.add('active');
+      dom.supportToggle.checked = false;
+      dom.supportPackArea.classList.remove('visible');
+      deselectAllPacks();
 
-        prevTotalMonthly = 0;
-        prevTotalTax = 0;
-        prevMobileTotal = 0;
+      prevMonthly = prevMonthlyTax = prevAnnual = prevInitial = prevGrand = prevMobile = 0;
 
-        render();
-      });
+      buildPhaseList();
+      render();
     }
 
     // ==========================================
-    // Summary Text (for clipboard)
+    // Summary (clipboard)
     // ==========================================
     function generateSummary() {
       var data = calculate();
-      var today = new Date();
-      var dateStr = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
-
-      var lines = [];
-      lines.push('========================================');
-      lines.push('JUST.DB 見積概算');
-      lines.push('作成日: ' + dateStr);
-      lines.push('========================================');
-      lines.push('');
-      lines.push('■ ライセンス');
-      lines.push('  同時ログインライセンス: ' + state.licenseCount + ' ライセンス');
-      lines.push('  月額: ' + formatYen(data.licenseCost) + '（税別）');
-      lines.push('');
-
-      if (state.selectedPackage !== 'none') {
-        lines.push('■ パッケージ');
-        if (state.selectedPackage === 'basic') {
-          lines.push('  ベーシックパッケージ: ' + formatYen(data.packageCost) + '/月（税別）');
-        } else {
-          lines.push('  スタンダードパッケージ: 要問い合わせ');
-        }
-        lines.push('');
+      var d = new Date();
+      var ds = d.getFullYear() + '/' + (d.getMonth()+1) + '/' + d.getDate();
+      var L = [];
+      L.push('========================================');
+      L.push('JUST.DB 見積概算');
+      L.push('作成日: ' + ds);
+      L.push('========================================');
+      L.push('');
+      L.push('■ ライセンス');
+      L.push('  同時ログインライセンス: ' + state.licenseCount + ' ライセンス');
+      L.push('  月額: ' + yen(data.licenseCost) + '（税別）');
+      L.push('');
+      L.push('■ パッケージ');
+      L.push('  ' + data.packageName + ': ' + yen(data.packageCost) + '/月（税別）');
+      L.push('');
+      L.push('■ 月額費用');
+      L.push('  月額合計（税別）: ' + yen(data.monthlySubtotal));
+      L.push('  消費税（10%）: ' + yen(data.monthlyTax));
+      L.push('  月額合計（税込）: ' + yen(data.monthlyTotal));
+      L.push('  年間費用（税込）: ' + yen(data.annualTotal));
+      L.push('');
+      L.push('■ 構築費用（初期費用）');
+      for (var i = 0; i < data.phaseDetails.length; i++) {
+        var pd = data.phaseDetails[i];
+        if (pd.hours > 0) L.push('  ' + pd.name + ': ' + pd.hours + 'h × ¥' + fmt.format(pd.rate) + ' = ' + yen(pd.cost));
       }
-
-      lines.push('■ 月額費用');
-      lines.push('  月額合計（税別）: ' + formatYen(data.monthlySubtotal));
-      lines.push('  消費税（10%）: ' + formatYen(data.monthlyTax));
-      lines.push('  月額合計（税込）: ' + formatYen(data.monthlyTotal));
-      lines.push('');
-
-      lines.push('■ 契約期間: ' + data.contractMonths + 'ヶ月');
-      lines.push('  契約期間合計（税別）: ' + formatYen(data.contractTotal));
-      lines.push('  契約期間合計（税込）: ' + formatYen(data.contractTotal + data.contractTotalTax));
-      lines.push('');
-
-      if (state.selectedFeatures.size > 0) {
-        lines.push('■ 構築機能（費用別途）');
-        state.selectedFeatures.forEach(function(id) {
-          var feat = CONSTRUCTION_FEATURES.find(function(f) { return f.id === id; });
-          if (feat) lines.push('  - ' + feat.name);
-        });
-        lines.push('');
-      }
-
-      if (state.selectedOptions.size > 0) {
-        lines.push('■ オプション（費用別途）');
-        state.selectedOptions.forEach(function(id) {
-          var opt = OPTIONS.find(function(o) { return o.id === id; });
-          if (opt) lines.push('  - ' + opt.name);
-        });
-        lines.push('');
-      }
-
-      lines.push('========================================');
-      lines.push('※ 本見積もりは概算です。正式なお見積もりは別途ご提示いたします。');
-      lines.push('========================================');
-
-      return lines.join('\n');
+      if (data.supportPackCost > 0) L.push('  ' + data.supportPackName + ': ' + yen(data.supportPackCost));
+      L.push('  初期費用合計（税別）: ' + yen(data.initialSubtotal));
+      L.push('  初期費用合計（税込）: ' + yen(data.initialTotal));
+      L.push('');
+      L.push('■ 契約期間: ' + data.contractMonths + 'ヶ月');
+      L.push('  月額 × ' + data.contractMonths + 'ヶ月（税込）: ' + yen(data.contractMonthlyTotal));
+      L.push('');
+      L.push('■ 初年度総費用（税込）: ' + yen(data.grandTotal));
+      L.push('  （月額 × 12ヶ月 + 初期費用）');
+      L.push('');
+      L.push('========================================');
+      L.push('※ 本見積もりは概算です。正式なお見積もりは別途ご提示いたします。');
+      L.push('========================================');
+      return L.join('\n');
     }
 
     // ==========================================
-    // Set Date
+    // Date
     // ==========================================
     function setDate() {
-      var today = new Date();
-      var y = today.getFullYear();
-      var m = today.getMonth() + 1;
-      var d = today.getDate();
-      var dateStr = y + '年' + m + '月' + d + '日';
-      dom.headerDate.textContent = dateStr;
-      dom.resultsDate.textContent = '作成日: ' + dateStr;
+      var d = new Date();
+      var s = d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日';
+      dom.headerDate.textContent = s;
+      dom.resultsDate.textContent = '作成日: ' + s;
     }
 
     // ==========================================
@@ -1837,8 +1225,8 @@
     function init() {
       cacheDom();
       setDate();
-      buildFeatureList();
-      buildOptionsList();
+      buildPhaseList();
+      buildSupportPacks();
       initChart();
       attachEvents();
       render();
