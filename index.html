@@ -419,23 +419,120 @@
     }
 
     /* ==========================================
+       Quote Sheet (御見積書) Overlay
+       ========================================== */
+    .quote-overlay {
+      position: fixed; inset: 0; z-index: 10000;
+      background: rgba(0,0,0,0.5); overflow-y: auto; display: none;
+    }
+    .quote-overlay.visible { display: block; }
+    .quote-overlay-controls {
+      position: sticky; top: 0; z-index: 10001; background: #333;
+      color: #fff; padding: 10px 20px; display: flex; gap: 12px;
+      justify-content: flex-end; align-items: center;
+    }
+    .quote-overlay-controls button {
+      font-family: var(--font); font-size: 0.85rem; font-weight: 700;
+      padding: 8px 20px; border: none; border-radius: 4px; cursor: pointer;
+    }
+    #quotePrint { background: var(--orange); color: #fff; }
+    #quotePrint:hover { background: var(--orange-hover); }
+    #quoteClose { background: #666; color: #fff; }
+    #quoteClose:hover { background: #888; }
+
+    .quote-page {
+      width: 210mm; min-height: 297mm; margin: 20px auto;
+      padding: 20mm 15mm 15mm 15mm; background: #fff;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      font-family: 'Noto Sans JP', sans-serif; font-size: 10pt;
+      color: #333; line-height: 1.6;
+    }
+    .quote-title {
+      text-align: center; font-size: 20pt; font-weight: 700;
+      letter-spacing: 0.5em; margin-bottom: 20px; color: #000;
+    }
+    .quote-top-row {
+      display: flex; justify-content: space-between; margin-bottom: 16px;
+    }
+    .quote-customer { flex: 1; }
+    .quote-customer-name {
+      font-size: 14pt; font-weight: 700; border-bottom: 2px solid #000;
+      padding-bottom: 4px; display: inline-block; min-width: 200px;
+      outline: none;
+    }
+    .quote-customer-name:focus { background: #fffbe6; }
+    .quote-summary-box {
+      margin-top: 14px; border: 3px solid #000;
+      padding: 10px 16px; display: inline-block; min-width: 260px;
+    }
+    .quote-summary-label { font-size: 9pt; font-weight: 500; margin-bottom: 2px; }
+    .quote-summary-amount { font-size: 16pt; font-weight: 700; }
+    .quote-company { text-align: right; font-size: 9pt; line-height: 1.8; }
+    .quote-company-name { font-size: 11pt; font-weight: 700; margin-top: 6px; }
+    .quote-stamp-area {
+      width: 60px; height: 60px; border: 1px dashed #ccc;
+      border-radius: 50%; margin-left: auto; margin-top: 6px;
+    }
+    .quote-validity { font-size: 9pt; color: #555; margin-bottom: 16px; }
+    .quote-section-label {
+      font-size: 10pt; font-weight: 700; margin: 16px 0 6px; color: #000;
+    }
+    .quote-table {
+      width: 100%; border-collapse: collapse; font-size: 9pt; margin-bottom: 10px;
+    }
+    .quote-table th {
+      background: #f0f0f0; border: 1px solid #333;
+      padding: 6px 8px; font-weight: 700; text-align: center;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+    .quote-table td { border: 1px solid #333; padding: 5px 8px; }
+    .quote-table .col-no { width: 6%; text-align: center; }
+    .quote-table .col-item { width: 38%; }
+    .quote-table .col-qty { width: 10%; text-align: right; }
+    .quote-table .col-unit { width: 10%; text-align: center; }
+    .quote-table .col-price { width: 18%; text-align: right; }
+    .quote-table .col-amount { width: 18%; text-align: right; }
+    .quote-table tfoot td {
+      border: 1px solid #333; padding: 5px 8px; font-weight: 700; text-align: right;
+    }
+    .quote-subtotal td {
+      background: #fafafa;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+    .quote-total td {
+      background: #f0f0f0; font-size: 10pt;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+    .quote-grand-total-row {
+      display: flex; justify-content: space-between; align-items: center;
+      border: 3px double #000; padding: 10px 16px;
+      margin: 12px 0 4px; font-size: 12pt; font-weight: 700;
+    }
+    .quote-grand-breakdown {
+      font-size: 8pt; color: #666; text-align: right; margin-bottom: 16px;
+    }
+    .quote-remarks { margin-top: 16px; font-size: 8pt; color: #555; }
+    .quote-remarks-title { font-weight: 700; font-size: 9pt; color: #000; margin-bottom: 4px; }
+    .quote-remarks ul { list-style: none; padding: 0; }
+    .quote-remarks li { padding-left: 14px; position: relative; }
+    .quote-remarks li::before { content: '※'; position: absolute; left: 0; }
+
+    /* ==========================================
        Print Styles
        ========================================== */
     @media print {
-      body { background: #fff; font-size: 11px; }
-      .app-header { position: static; background: var(--navy); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .app-layout { display: block; padding: 0; max-width: 700px; margin: 0 auto; }
-      .configurator { display: none; }
-      .results-panel { position: static; max-height: none; }
-      .results-card { box-shadow: none; border: 1px solid #ddd; }
-      .results-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .result-category { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .grand-total-section { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .action-bar { display: none; }
+      body > *:not(#quoteSheet) { display: none !important; }
+      #quoteSheet.quote-overlay {
+        display: block !important; position: static !important;
+        background: none !important; overflow: visible !important;
+      }
+      .quote-overlay-controls { display: none !important; }
+      .quote-page {
+        margin: 0; padding: 15mm; box-shadow: none; width: 100%; min-height: auto;
+      }
       .mobile-total-bar { display: none !important; }
       .copy-feedback { display: none !important; }
-      .chart-section { page-break-inside: avoid; }
-      .detail-section { page-break-inside: avoid; }
+      @page { size: A4; margin: 0; }
     }
 
     /* Scrollbar */
@@ -724,6 +821,96 @@
 
   <!-- Copy Feedback Toast -->
   <div class="copy-feedback" id="copyFeedback">クリップボードにコピーしました</div>
+
+  <!-- Quote Sheet (御見積書) Overlay -->
+  <div id="quoteSheet" class="quote-overlay">
+    <div class="quote-overlay-controls">
+      <button id="quotePrint">🖨 印刷 / PDF出力</button>
+      <button id="quoteClose">✕ 閉じる</button>
+    </div>
+    <div class="quote-page">
+      <h1 class="quote-title">御 見 積 書</h1>
+      <div class="quote-top-row">
+        <div class="quote-customer">
+          <div class="quote-customer-name" id="quoteCustomerName" contenteditable="true">〇〇〇〇 御中</div>
+          <div class="quote-summary-box">
+            <div class="quote-summary-label">合計金額（税込）</div>
+            <div class="quote-summary-amount" id="quoteSummaryAmount">¥0</div>
+          </div>
+        </div>
+        <div class="quote-company">
+          <div id="quoteDate">見積日: 2026年2月20日</div>
+          <div id="quoteNumber">見積番号: EST-20260220-001</div>
+          <div class="quote-company-name">株式会社〇〇〇〇</div>
+          <div>〒000-0000<br>東京都〇〇区〇〇 0-0-0<br>TEL: 000-0000-0000</div>
+          <div class="quote-stamp-area"></div>
+        </div>
+      </div>
+      <div class="quote-validity">見積有効期限: 発行日より30日間</div>
+
+      <!-- Monthly Table -->
+      <div class="quote-section-label">【月額費用】</div>
+      <table class="quote-table">
+        <thead>
+          <tr>
+            <th class="col-no">No.</th>
+            <th class="col-item">項目</th>
+            <th class="col-qty">数量</th>
+            <th class="col-unit">単位</th>
+            <th class="col-price">単価</th>
+            <th class="col-amount">金額</th>
+          </tr>
+        </thead>
+        <tbody id="quoteMonthlyBody"></tbody>
+        <tfoot>
+          <tr class="quote-subtotal"><td colspan="5">小計（税別）</td><td id="quoteMonthlySubtotal"></td></tr>
+          <tr><td colspan="5">消費税（10%）</td><td id="quoteMonthlyTax"></td></tr>
+          <tr class="quote-total"><td colspan="5">月額合計（税込）</td><td id="quoteMonthlyTotal"></td></tr>
+        </tfoot>
+      </table>
+
+      <!-- Initial Cost Table -->
+      <div class="quote-section-label">【初期費用（構築費用）】</div>
+      <table class="quote-table">
+        <thead>
+          <tr>
+            <th class="col-no">No.</th>
+            <th class="col-item">項目</th>
+            <th class="col-qty">数量</th>
+            <th class="col-unit">単位</th>
+            <th class="col-price">単価</th>
+            <th class="col-amount">金額</th>
+          </tr>
+        </thead>
+        <tbody id="quoteInitialBody"></tbody>
+        <tfoot>
+          <tr class="quote-subtotal"><td colspan="5">小計（税別）</td><td id="quoteInitialSubtotal"></td></tr>
+          <tr><td colspan="5">消費税（10%）</td><td id="quoteInitialTax"></td></tr>
+          <tr class="quote-total"><td colspan="5">初期費用合計（税込）</td><td id="quoteInitialTotal"></td></tr>
+        </tfoot>
+      </table>
+
+      <!-- Grand Total -->
+      <div class="quote-grand-total-row">
+        <span>初年度総費用（税込）</span>
+        <span id="quoteGrandTotal">¥0</span>
+      </div>
+      <div class="quote-grand-breakdown" id="quoteGrandBreakdown"></div>
+
+      <!-- Remarks -->
+      <div class="quote-remarks">
+        <div class="quote-remarks-title">【備考】</div>
+        <ul>
+          <li>本見積もりは概算です。正式なお見積もりは別途ご提示いたします。</li>
+          <li>記載金額はすべて税別表示です。別途消費税10%が加算されます。</li>
+          <li>契約期間: <span id="quoteContractMonths">12</span>ヶ月</li>
+          <li>同時ログインライセンスは5ライセンス単位での購入となります。</li>
+          <li>サポートパックの有効期限は注文月から6ヶ月後の月末までです。</li>
+          <li>保守運用費用はサポートパックに含まれません。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
   <!-- ==========================================
        JavaScript
@@ -1356,8 +1543,19 @@
         });
       });
 
-      // PDF
-      dom.btnPdf.addEventListener('click', function() { window.print(); });
+      // PDF → 御見積書オーバーレイ
+      dom.btnPdf.addEventListener('click', function() {
+        populateQuoteSheet();
+        document.getElementById('quoteSheet').classList.add('visible');
+      });
+
+      // Quote sheet controls
+      document.getElementById('quoteClose').addEventListener('click', function() {
+        document.getElementById('quoteSheet').classList.remove('visible');
+      });
+      document.getElementById('quotePrint').addEventListener('click', function() {
+        window.print();
+      });
 
       // Reset
       dom.btnReset.addEventListener('click', resetAll);
@@ -1460,6 +1658,102 @@
       L.push('※ 保守運用費用はサポートパックに含まれません');
       L.push('========================================');
       return L.join('\n');
+    }
+
+    // ==========================================
+    // Quote Sheet (御見積書)
+    // ==========================================
+    function populateQuoteSheet() {
+      var data = calculate();
+      var d = new Date();
+      var dateStr = d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日';
+      var numStr = 'EST-' + d.getFullYear() +
+        ('0'+(d.getMonth()+1)).slice(-2) + ('0'+d.getDate()).slice(-2) + '-001';
+
+      document.getElementById('quoteDate').textContent = '見積日: ' + dateStr;
+      document.getElementById('quoteNumber').textContent = '見積番号: ' + numStr;
+      document.getElementById('quoteSummaryAmount').textContent = yen(data.grandTotal);
+      document.getElementById('quoteContractMonths').textContent = data.contractMonths;
+
+      // Monthly table
+      var mRows = '';
+      var no = 1;
+      mRows += '<tr><td class="col-no">' + no++ + '</td>' +
+        '<td class="col-item">JUST.DB ライセンス（同時ログイン）</td>' +
+        '<td class="col-qty">' + state.licenseCount + '</td>' +
+        '<td class="col-unit">ユーザー</td>' +
+        '<td class="col-price">' + yen(PRICES.license.unitPrice) + '</td>' +
+        '<td class="col-amount">' + yen(data.licenseCost) + '</td></tr>';
+
+      if (state.selectedPackage !== 'none') {
+        mRows += '<tr><td class="col-no">' + no++ + '</td>' +
+          '<td class="col-item">' + data.packageName + '</td>' +
+          '<td class="col-qty">1</td>' +
+          '<td class="col-unit">式</td>' +
+          '<td class="col-price">' + yen(data.packageCost) + '</td>' +
+          '<td class="col-amount">' + yen(data.packageCost) + '</td></tr>';
+      }
+
+      document.getElementById('quoteMonthlyBody').innerHTML = mRows;
+      document.getElementById('quoteMonthlySubtotal').textContent = yen(data.monthlySubtotal);
+      document.getElementById('quoteMonthlyTax').textContent = yen(data.monthlyTax);
+      document.getElementById('quoteMonthlyTotal').textContent = yen(data.monthlyTotal);
+
+      // Initial cost table
+      var iRows = '';
+      no = 1;
+
+      if (data.usePackLogic) {
+        iRows += '<tr><td class="col-no">' + no++ + '</td>' +
+          '<td class="col-item">' + data.supportPackName + '（要件整理〜成果物作成 全フェーズ）</td>' +
+          '<td class="col-qty">1</td>' +
+          '<td class="col-unit">式</td>' +
+          '<td class="col-price">' + yen(data.supportPackCost) + '</td>' +
+          '<td class="col-amount">' + yen(data.supportPackCost) + '</td></tr>';
+      } else {
+        for (var i = 0; i < data.phaseDetails.length; i++) {
+          var pd = data.phaseDetails[i];
+          if (pd.hours > 0) {
+            iRows += '<tr><td class="col-no">' + no++ + '</td>' +
+              '<td class="col-item">' + pd.name + '（' + pd.role + '）</td>' +
+              '<td class="col-qty">' + pd.hours + '</td>' +
+              '<td class="col-unit">時間</td>' +
+              '<td class="col-price">' + yen(pd.rate) + '</td>' +
+              '<td class="col-amount">' + yen(pd.cost) + '</td></tr>';
+          }
+        }
+        if (data.supportPackCost > 0) {
+          iRows += '<tr><td class="col-no">' + no++ + '</td>' +
+            '<td class="col-item">' + data.supportPackName + '</td>' +
+            '<td class="col-qty">1</td>' +
+            '<td class="col-unit">式</td>' +
+            '<td class="col-price">' + yen(data.supportPackCost) + '</td>' +
+            '<td class="col-amount">' + yen(data.supportPackCost) + '</td></tr>';
+        }
+      }
+
+      // Custom work items (always separate)
+      for (var j = 0; j < data.customWorkDetails.length; j++) {
+        var cwd = data.customWorkDetails[j];
+        if (cwd.hours > 0) {
+          iRows += '<tr><td class="col-no">' + no++ + '</td>' +
+            '<td class="col-item">' + cwd.name + '（' + cwd.role + '・パック対象外）</td>' +
+            '<td class="col-qty">' + cwd.hours + '</td>' +
+            '<td class="col-unit">時間</td>' +
+            '<td class="col-price">' + yen(cwd.rate) + '</td>' +
+            '<td class="col-amount">' + yen(cwd.cost) + '</td></tr>';
+        }
+      }
+
+      document.getElementById('quoteInitialBody').innerHTML = iRows;
+      document.getElementById('quoteInitialSubtotal').textContent = yen(data.initialSubtotal);
+      document.getElementById('quoteInitialTax').textContent = yen(data.initialTax);
+      document.getElementById('quoteInitialTotal').textContent = yen(data.initialTotal);
+
+      // Grand total
+      document.getElementById('quoteGrandTotal').textContent = yen(data.grandTotal);
+      document.getElementById('quoteGrandBreakdown').textContent =
+        '月額 ' + yen(data.monthlyTotal) + ' × 12ヶ月 + 初期費用 ' + yen(data.initialTotal);
     }
 
     // ==========================================
