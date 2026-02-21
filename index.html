@@ -1809,9 +1809,9 @@
           '<td class="col-amount">' + fmt.format(data.packageCost) + '</td></tr>';
       }
 
-      // Empty rows for formal look (at least 10 total rows)
+      // Empty rows for formal look (5 total rows - monthly has max 2 data rows)
       var mCount = state.selectedPackage !== 'none' ? 2 : 1;
-      for (var ei = mCount; ei < 10; ei++) {
+      for (var ei = mCount; ei < 5; ei++) {
         mRows += '<tr class="empty-row"><td class="col-item"></td><td class="col-qty"></td><td class="col-price"></td><td class="col-amount"></td></tr>';
       }
 
